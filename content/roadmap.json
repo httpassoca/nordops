@@ -40,55 +40,87 @@
           "tasks": [
             {
               "text": "Create/choose a dedicated AWS account for the project",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Enable MFA on the root account and your main admin identity.",
+                "Create a budget and at least one alert (email) for cost spikes.",
+                "Decide how you will authenticate day-to-day (IAM user vs SSO/roles) and write it down."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
+              "decisions": [
+                "Where to put this project (new AWS account vs separate environment in an existing account)."
+              ],
+              "doneWhen": [
+                "You can log in safely, MFA is required, and you receive a test budget alert."
+              ],
+              "avoid": [
+                "Leaving root without MFA.",
+                "Running resources without any budget alarm."
               ]
             },
             {
               "text": "Enable MFA + set a monthly budget + cost alerts",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Enable MFA on the root account and your main admin identity.",
+                "Create a budget and at least one alert (email) for cost spikes.",
+                "Decide how you will authenticate day-to-day (IAM user vs SSO/roles) and write it down.",
+                "Set up a metrics and dashboard view that answers “is it healthy?” quickly.",
+                "Add 1–3 alerts that are actionable (crashloop, restarts, node pressure)."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
+              "decisions": [
+                "Where to put this project (new AWS account vs separate environment in an existing account)."
+              ],
+              "doneWhen": [
+                "You can log in safely, MFA is required, and you receive a test budget alert.",
+                "You can detect a failure within minutes and find a likely cause using dashboards/logs."
+              ],
+              "avoid": [
+                "Leaving root without MFA.",
+                "Running resources without any budget alarm.",
+                "Too many alerts (noise) before you have solid runbooks."
               ]
             },
             {
               "text": "Create an admin role/user strategy (write down what you chose and why)",
-              "instructions": [
-                "Write it as if future-you is sleep-deprived and debugging.",
-                "Add copy-pastable commands."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Include “expected output” for key commands when possible."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             },
             {
               "text": "Install AWS CLI + configure profiles",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             },
             {
               "text": "Write docs: ‘How I secured this account’",
-              "instructions": [
-                "Write it as if future-you is sleep-deprived and debugging.",
-                "Add copy-pastable commands."
+              "what": [
+                "Enable MFA on the root account and your main admin identity.",
+                "Create a budget and at least one alert (email) for cost spikes.",
+                "Decide how you will authenticate day-to-day (IAM user vs SSO/roles) and write it down.",
+                "Write short docs that explain purpose, steps, and what “good” looks like.",
+                "Include both Console locations and CLI terms (so you can search later)."
               ],
-              "recommendations": [
-                "Include “expected output” for key commands when possible."
+              "decisions": [
+                "Where to put this project (new AWS account vs separate environment in an existing account)."
+              ],
+              "doneWhen": [
+                "You can log in safely, MFA is required, and you receive a test budget alert.",
+                "Someone else can follow your doc to reproduce the result."
+              ],
+              "avoid": [
+                "Leaving root without MFA.",
+                "Running resources without any budget alarm."
               ]
             }
           ]
@@ -99,65 +131,73 @@
           "tasks": [
             {
               "text": "Create repo structure: infra/terraform, apps, docs, runbooks",
-              "instructions": [
-                "Create/adjust Terraform code for this change.",
-                "Run: terraform fmt && terraform validate.",
-                "Run: terraform plan and read the diff before applying.",
-                "Write it as if future-you is sleep-deprived and debugging.",
-                "Add copy-pastable commands."
+              "what": [
+                "Create folders for infra, apps, docs, and runbooks.",
+                "Write a short README explaining what lives where.",
+                "Write short docs that explain purpose, steps, and what “good” looks like.",
+                "Include both Console locations and CLI terms (so you can search later)."
               ],
-              "recommendations": [
-                "Prefer small, reviewable commits.",
-                "Keep state remote and locked (S3 + DynamoDB).",
-                "Include “expected output” for key commands when possible."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "A new contributor can find infra/app/docs immediately.",
+                "Someone else can follow your doc to reproduce the result."
+              ],
+              "avoid": []
             },
             {
               "text": "Configure remote state (S3) + locking (DynamoDB)",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Create an S3 bucket dedicated to Terraform state and enable versioning.",
+                "Create a DynamoDB table for state locking.",
+                "Configure Terraform to use the remote backend and confirm your state is no longer local."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
+              "decisions": [
+                "Bucket naming convention and region.",
+                "One backend per environment vs shared backend."
+              ],
+              "doneWhen": [
+                "Terraform state is stored in S3, locking works (no simultaneous applies), and state is versioned."
+              ],
+              "avoid": [
+                "Committing *.tfstate files to git.",
+                "Storing state in a personal bucket without versioning."
               ]
             },
             {
               "text": "Run terraform fmt/validate and document commands",
-              "instructions": [
-                "Create/adjust Terraform code for this change.",
-                "Run: terraform fmt && terraform validate.",
-                "Run: terraform plan and read the diff before applying.",
-                "Write it as if future-you is sleep-deprived and debugging.",
-                "Add copy-pastable commands."
+              "what": [
+                "Write short docs that explain purpose, steps, and what “good” looks like.",
+                "Include both Console locations and CLI terms (so you can search later)."
               ],
-              "recommendations": [
-                "Prefer small, reviewable commits.",
-                "Keep state remote and locked (S3 + DynamoDB).",
-                "Include “expected output” for key commands when possible."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "Someone else can follow your doc to reproduce the result."
+              ],
+              "avoid": []
             },
             {
               "text": "Add README: ‘bootstrap infra from scratch’",
-              "instructions": [
-                "Write it as if future-you is sleep-deprived and debugging.",
-                "Add copy-pastable commands."
+              "what": [
+                "Write short docs that explain purpose, steps, and what “good” looks like.",
+                "Include both Console locations and CLI terms (so you can search later)."
               ],
-              "recommendations": [
-                "Include “expected output” for key commands when possible."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "Someone else can follow your doc to reproduce the result."
+              ],
+              "avoid": []
             },
             {
               "text": "Commit baseline and tag a milestone (Week1-Day2)",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             }
           ]
         },
@@ -167,57 +207,87 @@
           "tasks": [
             {
               "text": "Provision VPC with public/private subnets across 2 AZs",
-              "instructions": [
-                "Draw the network flow: client → ALB → nodes → pods.",
-                "Verify routes and security groups allow the traffic you expect."
+              "what": [
+                "Design a VPC with public and private subnets across 2 availability zones.",
+                "Set routing so public subnets reach the internet, and private subnets reach the internet via NAT.",
+                "Define security groups with minimal inbound access and clear intent."
               ],
-              "recommendations": [
-                "Document tradeoffs (1 NAT vs 2 NATs)."
+              "decisions": [
+                "Single NAT (cheaper) vs one NAT per AZ (more resilient)."
+              ],
+              "doneWhen": [
+                "You can explain the traffic path from “internet → load balancer → nodes → pods” on a diagram.",
+                "Instances/pods in private subnets can reach the internet (for updates/pulling images) without being publicly reachable."
+              ],
+              "avoid": [
+                "Putting worker nodes in public subnets unless you have a strong reason.",
+                "Overly permissive 0.0.0.0/0 inbound rules."
               ]
             },
             {
               "text": "Set route tables + internet gateway",
-              "instructions": [
-                "Draw the network flow: client → ALB → nodes → pods.",
-                "Verify routes and security groups allow the traffic you expect."
+              "what": [
+                "Design a VPC with public and private subnets across 2 availability zones.",
+                "Set routing so public subnets reach the internet, and private subnets reach the internet via NAT.",
+                "Define security groups with minimal inbound access and clear intent."
               ],
-              "recommendations": [
-                "Document tradeoffs (1 NAT vs 2 NATs)."
+              "decisions": [
+                "Single NAT (cheaper) vs one NAT per AZ (more resilient)."
+              ],
+              "doneWhen": [
+                "You can explain the traffic path from “internet → load balancer → nodes → pods” on a diagram.",
+                "Instances/pods in private subnets can reach the internet (for updates/pulling images) without being publicly reachable."
+              ],
+              "avoid": [
+                "Putting worker nodes in public subnets unless you have a strong reason.",
+                "Overly permissive 0.0.0.0/0 inbound rules."
               ]
             },
             {
               "text": "Add NAT (single NAT is fine; document tradeoff)",
-              "instructions": [
-                "Draw the network flow: client → ALB → nodes → pods.",
-                "Verify routes and security groups allow the traffic you expect.",
-                "Write it as if future-you is sleep-deprived and debugging.",
-                "Add copy-pastable commands."
+              "what": [
+                "Design a VPC with public and private subnets across 2 availability zones.",
+                "Set routing so public subnets reach the internet, and private subnets reach the internet via NAT.",
+                "Define security groups with minimal inbound access and clear intent.",
+                "Write short docs that explain purpose, steps, and what “good” looks like.",
+                "Include both Console locations and CLI terms (so you can search later)."
               ],
-              "recommendations": [
-                "Document tradeoffs (1 NAT vs 2 NATs).",
-                "Include “expected output” for key commands when possible."
+              "decisions": [
+                "Single NAT (cheaper) vs one NAT per AZ (more resilient)."
+              ],
+              "doneWhen": [
+                "You can explain the traffic path from “internet → load balancer → nodes → pods” on a diagram.",
+                "Instances/pods in private subnets can reach the internet (for updates/pulling images) without being publicly reachable.",
+                "Someone else can follow your doc to reproduce the result."
+              ],
+              "avoid": [
+                "Putting worker nodes in public subnets unless you have a strong reason.",
+                "Overly permissive 0.0.0.0/0 inbound rules."
               ]
             },
             {
               "text": "Security groups baseline (keep it minimal)",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             },
             {
               "text": "Write docs/architecture.md (diagram + data flow)",
-              "instructions": [
-                "Write it as if future-you is sleep-deprived and debugging.",
-                "Add copy-pastable commands."
+              "what": [
+                "Write short docs that explain purpose, steps, and what “good” looks like.",
+                "Include both Console locations and CLI terms (so you can search later)."
               ],
-              "recommendations": [
-                "Include “expected output” for key commands when possible."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "Someone else can follow your doc to reproduce the result."
+              ],
+              "avoid": []
             }
           ]
         },
@@ -227,57 +297,104 @@
           "tasks": [
             {
               "text": "Provision EKS cluster with managed node group",
-              "instructions": [
-                "After changes, verify: kubectl get nodes,pods -A",
-                "Confirm addons are healthy (metrics-server, CSI drivers)."
+              "what": [
+                "Create an EKS cluster and a managed node group sized for your lab.",
+                "Ensure you can access the cluster (kubectl configured) and list nodes/pods.",
+                "Install core addons you’ll rely on (metrics, storage driver)."
               ],
-              "recommendations": [
-                "Write a quick runbook: how to regain access if kubeconfig breaks."
+              "decisions": [
+                "Cluster version and upgrade strategy (even for a lab).",
+                "Node instance types (cost vs capacity)."
+              ],
+              "doneWhen": [
+                "Nodes show as Ready and system pods are healthy.",
+                "You can deploy a simple test workload and delete it."
+              ],
+              "avoid": [
+                "Skipping cluster access documentation (future-you will suffer)."
               ]
             },
             {
               "text": "Install kubectl + verify access",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Create an EKS cluster and a managed node group sized for your lab.",
+                "Ensure you can access the cluster (kubectl configured) and list nodes/pods.",
+                "Install core addons you’ll rely on (metrics, storage driver)."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
+              "decisions": [
+                "Cluster version and upgrade strategy (even for a lab).",
+                "Node instance types (cost vs capacity)."
+              ],
+              "doneWhen": [
+                "Nodes show as Ready and system pods are healthy.",
+                "You can deploy a simple test workload and delete it."
+              ],
+              "avoid": [
+                "Skipping cluster access documentation (future-you will suffer)."
               ]
             },
             {
               "text": "Install metrics-server",
-              "instructions": [
-                "Create at least one dashboard that answers: “is the service healthy?”",
-                "Add 1–2 alerts and test they fire."
+              "what": [
+                "Create an EKS cluster and a managed node group sized for your lab.",
+                "Ensure you can access the cluster (kubectl configured) and list nodes/pods.",
+                "Install core addons you’ll rely on (metrics, storage driver).",
+                "Set up a metrics and dashboard view that answers “is it healthy?” quickly.",
+                "Add 1–3 alerts that are actionable (crashloop, restarts, node pressure)."
               ],
-              "recommendations": [
-                "Prefer actionable alerts; avoid noisy ones."
+              "decisions": [
+                "Cluster version and upgrade strategy (even for a lab).",
+                "Node instance types (cost vs capacity)."
+              ],
+              "doneWhen": [
+                "Nodes show as Ready and system pods are healthy.",
+                "You can deploy a simple test workload and delete it.",
+                "You can detect a failure within minutes and find a likely cause using dashboards/logs."
+              ],
+              "avoid": [
+                "Skipping cluster access documentation (future-you will suffer).",
+                "Too many alerts (noise) before you have solid runbooks."
               ]
             },
             {
               "text": "Install EBS CSI driver",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Create an EKS cluster and a managed node group sized for your lab.",
+                "Ensure you can access the cluster (kubectl configured) and list nodes/pods.",
+                "Install core addons you’ll rely on (metrics, storage driver)."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
+              "decisions": [
+                "Cluster version and upgrade strategy (even for a lab).",
+                "Node instance types (cost vs capacity)."
+              ],
+              "doneWhen": [
+                "Nodes show as Ready and system pods are healthy.",
+                "You can deploy a simple test workload and delete it."
+              ],
+              "avoid": [
+                "Skipping cluster access documentation (future-you will suffer)."
               ]
             },
             {
               "text": "Write runbooks: ‘cluster access + basic kubectl checks’",
-              "instructions": [
-                "After changes, verify: kubectl get nodes,pods -A",
-                "Confirm addons are healthy (metrics-server, CSI drivers).",
-                "Write it as if future-you is sleep-deprived and debugging.",
-                "Add copy-pastable commands."
+              "what": [
+                "Create an EKS cluster and a managed node group sized for your lab.",
+                "Ensure you can access the cluster (kubectl configured) and list nodes/pods.",
+                "Install core addons you’ll rely on (metrics, storage driver).",
+                "Write short docs that explain purpose, steps, and what “good” looks like.",
+                "Include both Console locations and CLI terms (so you can search later)."
               ],
-              "recommendations": [
-                "Write a quick runbook: how to regain access if kubeconfig breaks.",
-                "Include “expected output” for key commands when possible."
+              "decisions": [
+                "Cluster version and upgrade strategy (even for a lab).",
+                "Node instance types (cost vs capacity)."
+              ],
+              "doneWhen": [
+                "Nodes show as Ready and system pods are healthy.",
+                "You can deploy a simple test workload and delete it.",
+                "Someone else can follow your doc to reproduce the result."
+              ],
+              "avoid": [
+                "Skipping cluster access documentation (future-you will suffer)."
               ]
             }
           ]
@@ -288,61 +405,64 @@
           "tasks": [
             {
               "text": "Test terraform plan/apply end-to-end",
-              "instructions": [
-                "Create/adjust Terraform code for this change.",
-                "Run: terraform fmt && terraform validate.",
-                "Run: terraform plan and read the diff before applying."
+              "what": [
+                "Turn your work into evidence: concise bullets, screenshots, and a short demo.",
+                "Make your repo easy to understand in 60 seconds.",
+                "Start an apply-and-feedback loop and iterate."
               ],
-              "recommendations": [
-                "Prefer small, reviewable commits.",
-                "Keep state remote and locked (S3 + DynamoDB)."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "Your CV/LinkedIn points to a project with clear proof (docs + demo)."
+              ],
+              "avoid": []
             },
             {
               "text": "Test terraform destroy (avoid surprise costs)",
-              "instructions": [
-                "Create/adjust Terraform code for this change.",
-                "Run: terraform fmt && terraform validate.",
-                "Run: terraform plan and read the diff before applying."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Prefer small, reviewable commits.",
-                "Keep state remote and locked (S3 + DynamoDB)."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             },
             {
               "text": "Add troubleshooting notes (common failures + fixes)",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             },
             {
               "text": "Refactor Terraform into modules if needed (only if it improves clarity)",
-              "instructions": [
-                "Create/adjust Terraform code for this change.",
-                "Run: terraform fmt && terraform validate.",
-                "Run: terraform plan and read the diff before applying."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Prefer small, reviewable commits.",
-                "Keep state remote and locked (S3 + DynamoDB)."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             },
             {
               "text": "End-of-week review: what you learned + what to adjust",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             }
           ]
         }
@@ -358,58 +478,75 @@
           "tasks": [
             {
               "text": "Create a small Node API (+ optional tiny UI)",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Build a small service that can start, respond, and expose health/readiness endpoints.",
+                "Containerize it so it runs the same locally and in Kubernetes.",
+                "Write down how to run it locally (env vars, ports, dependencies)."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
+              "decisions": [],
+              "doneWhen": [
+                "You can run it locally and in a container and get the same result.",
+                "Health/readiness endpoints behave correctly (fail when the app can’t serve)."
+              ],
+              "avoid": [
+                "Hiding configuration inside the image instead of environment/config."
               ]
             },
             {
               "text": "Add /healthz and /readyz endpoints",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Build a small service that can start, respond, and expose health/readiness endpoints.",
+                "Containerize it so it runs the same locally and in Kubernetes.",
+                "Write down how to run it locally (env vars, ports, dependencies)."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
+              "decisions": [],
+              "doneWhen": [
+                "You can run it locally and in a container and get the same result.",
+                "Health/readiness endpoints behave correctly (fail when the app can’t serve)."
+              ],
+              "avoid": [
+                "Hiding configuration inside the image instead of environment/config."
               ]
             },
             {
               "text": "Write Dockerfile (multi-stage if relevant)",
-              "instructions": [
-                "Build locally once, then automate in CI.",
-                "Tag images with commit SHA and keep latest optional.",
-                "Write it as if future-you is sleep-deprived and debugging.",
-                "Add copy-pastable commands."
+              "what": [
+                "Build a small service that can start, respond, and expose health/readiness endpoints.",
+                "Containerize it so it runs the same locally and in Kubernetes.",
+                "Write down how to run it locally (env vars, ports, dependencies)."
               ],
-              "recommendations": [
-                "Keep images small (multi-stage builds) when possible.",
-                "Include “expected output” for key commands when possible."
+              "decisions": [],
+              "doneWhen": [
+                "You can run it locally and in a container and get the same result.",
+                "Health/readiness endpoints behave correctly (fail when the app can’t serve)."
+              ],
+              "avoid": [
+                "Hiding configuration inside the image instead of environment/config."
               ]
             },
             {
               "text": "Build and run locally; document commands",
-              "instructions": [
-                "Write it as if future-you is sleep-deprived and debugging.",
-                "Add copy-pastable commands."
+              "what": [
+                "Write short docs that explain purpose, steps, and what “good” looks like.",
+                "Include both Console locations and CLI terms (so you can search later)."
               ],
-              "recommendations": [
-                "Include “expected output” for key commands when possible."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "Someone else can follow your doc to reproduce the result."
+              ],
+              "avoid": []
             },
             {
               "text": "Push code with a clean README section: local run",
-              "instructions": [
-                "Write it as if future-you is sleep-deprived and debugging.",
-                "Add copy-pastable commands."
+              "what": [
+                "Write short docs that explain purpose, steps, and what “good” looks like.",
+                "Include both Console locations and CLI terms (so you can search later)."
               ],
-              "recommendations": [
-                "Include “expected output” for key commands when possible."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "Someone else can follow your doc to reproduce the result."
+              ],
+              "avoid": []
             }
           ]
         },
@@ -419,54 +556,75 @@
           "tasks": [
             {
               "text": "Create a Helm chart for the app",
-              "instructions": [
-                "Add values.yaml defaults and document required values.",
-                "Use probes + requests/limits in the chart."
+              "what": [
+                "Create a Helm chart that deploys your app with sane defaults.",
+                "Include resource limits, probes, and configuration via values.",
+                "Make it easy to override settings per environment."
               ],
-              "recommendations": [
-                "Keep templates simple; avoid clever logic."
+              "decisions": [],
+              "doneWhen": [
+                "A fresh cluster can install the chart and the app becomes reachable.",
+                "You can upgrade and rollback reliably."
+              ],
+              "avoid": [
+                "Hardcoding secrets/URLs inside templates."
               ]
             },
             {
               "text": "Set requests/limits + probes",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             },
             {
               "text": "Config via ConfigMap + Secret (no hardcoding)",
-              "instructions": [
-                "Build locally once, then automate in CI.",
-                "Tag images with commit SHA and keep latest optional."
+              "what": [
+                "Create an ECR repository.",
+                "Decide image tagging strategy (SHA, semver, latest).",
+                "Make the cluster able to pull the image."
               ],
-              "recommendations": [
-                "Keep images small (multi-stage builds) when possible."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "A new image is available in ECR and your deployment can pull it."
+              ],
+              "avoid": []
             },
             {
               "text": "Deploy to cluster and verify rollout",
-              "instructions": [
-                "After changes, verify: kubectl get nodes,pods -A",
-                "Confirm addons are healthy (metrics-server, CSI drivers)."
+              "what": [
+                "Create an EKS cluster and a managed node group sized for your lab.",
+                "Ensure you can access the cluster (kubectl configured) and list nodes/pods.",
+                "Install core addons you’ll rely on (metrics, storage driver)."
               ],
-              "recommendations": [
-                "Write a quick runbook: how to regain access if kubeconfig breaks."
+              "decisions": [
+                "Cluster version and upgrade strategy (even for a lab).",
+                "Node instance types (cost vs capacity)."
+              ],
+              "doneWhen": [
+                "Nodes show as Ready and system pods are healthy.",
+                "You can deploy a simple test workload and delete it."
+              ],
+              "avoid": [
+                "Skipping cluster access documentation (future-you will suffer)."
               ]
             },
             {
               "text": "Write runbooks/deploy.md (how to deploy/rollback)",
-              "instructions": [
-                "Write it as if future-you is sleep-deprived and debugging.",
-                "Add copy-pastable commands."
+              "what": [
+                "Write short docs that explain purpose, steps, and what “good” looks like.",
+                "Include both Console locations and CLI terms (so you can search later)."
               ],
-              "recommendations": [
-                "Include “expected output” for key commands when possible."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "Someone else can follow your doc to reproduce the result."
+              ],
+              "avoid": []
             }
           ]
         },
@@ -476,54 +634,74 @@
           "tasks": [
             {
               "text": "Install AWS Load Balancer Controller",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Install/configure the AWS Load Balancer Controller in the cluster.",
+                "Expose your service through an Ingress and confirm traffic reaches your pods.",
+                "Understand and document what health checks are used and where."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
+              "decisions": [],
+              "doneWhen": [
+                "You can hit the app from the internet and get a successful response.",
+                "You know where to look when you get 502/503 (Ingress, Service, Pod readiness, controller logs)."
+              ],
+              "avoid": [
+                "Mismatch between readiness path/port and ALB health check settings."
               ]
             },
             {
               "text": "Expose app via Ingress",
-              "instructions": [
-                "Verify the ALB target group health checks match your readiness endpoint.",
-                "Debug with: kubectl describe ingress + controller logs."
+              "what": [
+                "Install/configure the AWS Load Balancer Controller in the cluster.",
+                "Expose your service through an Ingress and confirm traffic reaches your pods.",
+                "Understand and document what health checks are used and where."
               ],
-              "recommendations": [
-                "Write down the 3 most common 502/503 causes and how to detect each."
+              "decisions": [],
+              "doneWhen": [
+                "You can hit the app from the internet and get a successful response.",
+                "You know where to look when you get 502/503 (Ingress, Service, Pod readiness, controller logs)."
+              ],
+              "avoid": [
+                "Mismatch between readiness path/port and ALB health check settings."
               ]
             },
             {
               "text": "Verify end-to-end HTTP reachability",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             },
             {
               "text": "Document common 502/503 causes + how you’d debug",
-              "instructions": [
-                "Write it as if future-you is sleep-deprived and debugging.",
-                "Add copy-pastable commands."
+              "what": [
+                "Write short docs that explain purpose, steps, and what “good” looks like.",
+                "Include both Console locations and CLI terms (so you can search later)."
               ],
-              "recommendations": [
-                "Include “expected output” for key commands when possible."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "Someone else can follow your doc to reproduce the result."
+              ],
+              "avoid": []
             },
             {
               "text": "Commit: ingress working",
-              "instructions": [
-                "Verify the ALB target group health checks match your readiness endpoint.",
-                "Debug with: kubectl describe ingress + controller logs."
+              "what": [
+                "Install/configure the AWS Load Balancer Controller in the cluster.",
+                "Expose your service through an Ingress and confirm traffic reaches your pods.",
+                "Understand and document what health checks are used and where."
               ],
-              "recommendations": [
-                "Write down the 3 most common 502/503 causes and how to detect each."
+              "decisions": [],
+              "doneWhen": [
+                "You can hit the app from the internet and get a successful response.",
+                "You know where to look when you get 502/503 (Ingress, Service, Pod readiness, controller logs)."
+              ],
+              "avoid": [
+                "Mismatch between readiness path/port and ALB health check settings."
               ]
             }
           ]
@@ -534,58 +712,81 @@
           "tasks": [
             {
               "text": "Create Route53 record for your app",
-              "instructions": [
-                "Draw the network flow: client → ALB → nodes → pods.",
-                "Verify routes and security groups allow the traffic you expect.",
-                "Confirm record points to the right ALB and propagation is complete."
+              "what": [
+                "Point a DNS record to your load balancer.",
+                "If using TLS, decide whether certificates are managed by AWS (ACM) or in-cluster tooling, and document it.",
+                "Verify renewals/ownership are clear."
               ],
-              "recommendations": [
-                "Document tradeoffs (1 NAT vs 2 NATs).",
-                "Keep TTL low while iterating, then raise it later."
+              "decisions": [
+                "ACM-managed vs cert-manager (in cluster)."
+              ],
+              "doneWhen": [
+                "A friendly domain works reliably from your phone and a second network."
+              ],
+              "avoid": [
+                "Leaving TTL high while iterating; it slows debugging."
               ]
             },
             {
               "text": "(Optional) Add TLS via ACM or cert-manager",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Point a DNS record to your load balancer.",
+                "If using TLS, decide whether certificates are managed by AWS (ACM) or in-cluster tooling, and document it.",
+                "Verify renewals/ownership are clear."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
+              "decisions": [
+                "ACM-managed vs cert-manager (in cluster)."
+              ],
+              "doneWhen": [
+                "A friendly domain works reliably from your phone and a second network."
+              ],
+              "avoid": [
+                "Leaving TTL high while iterating; it slows debugging."
               ]
             },
             {
               "text": "Document: how to rotate/renew certs",
-              "instructions": [
-                "Write it as if future-you is sleep-deprived and debugging.",
-                "Add copy-pastable commands."
+              "what": [
+                "Point a DNS record to your load balancer.",
+                "If using TLS, decide whether certificates are managed by AWS (ACM) or in-cluster tooling, and document it.",
+                "Verify renewals/ownership are clear.",
+                "Write short docs that explain purpose, steps, and what “good” looks like.",
+                "Include both Console locations and CLI terms (so you can search later)."
               ],
-              "recommendations": [
-                "Include “expected output” for key commands when possible."
+              "decisions": [
+                "ACM-managed vs cert-manager (in cluster)."
+              ],
+              "doneWhen": [
+                "A friendly domain works reliably from your phone and a second network.",
+                "Someone else can follow your doc to reproduce the result."
+              ],
+              "avoid": [
+                "Leaving TTL high while iterating; it slows debugging."
               ]
             },
             {
               "text": "Add a simple ‘status page’ endpoint",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             },
             {
               "text": "End-to-day: validate everything from a fresh device",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             }
           ]
         },
@@ -595,55 +796,63 @@
           "tasks": [
             {
               "text": "Write runbooks/release.md (step-by-step checklist)",
-              "instructions": [
-                "Write it as if future-you is sleep-deprived and debugging.",
-                "Add copy-pastable commands."
+              "what": [
+                "Write short docs that explain purpose, steps, and what “good” looks like.",
+                "Include both Console locations and CLI terms (so you can search later)."
               ],
-              "recommendations": [
-                "Include “expected output” for key commands when possible."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "Someone else can follow your doc to reproduce the result."
+              ],
+              "avoid": []
             },
             {
               "text": "Write docs for rollback path",
-              "instructions": [
-                "Write it as if future-you is sleep-deprived and debugging.",
-                "Add copy-pastable commands."
+              "what": [
+                "Write short docs that explain purpose, steps, and what “good” looks like.",
+                "Include both Console locations and CLI terms (so you can search later)."
               ],
-              "recommendations": [
-                "Include “expected output” for key commands when possible."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "Someone else can follow your doc to reproduce the result."
+              ],
+              "avoid": []
             },
             {
               "text": "Do a ‘fake release’: change config + deploy",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             },
             {
               "text": "Document ‘what can go wrong’ + how you detect it",
-              "instructions": [
-                "Write it as if future-you is sleep-deprived and debugging.",
-                "Add copy-pastable commands."
+              "what": [
+                "Write short docs that explain purpose, steps, and what “good” looks like.",
+                "Include both Console locations and CLI terms (so you can search later)."
               ],
-              "recommendations": [
-                "Include “expected output” for key commands when possible."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "Someone else can follow your doc to reproduce the result."
+              ],
+              "avoid": []
             },
             {
               "text": "End-of-week review: gaps to fix next week",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             }
           ]
         }
@@ -659,53 +868,81 @@
           "tasks": [
             {
               "text": "Add GitHub Actions workflow: lint/test/build on PR",
-              "instructions": [
-                "Run the workflow on a PR and confirm it blocks bad changes.",
-                "Keep secrets out of the repo; prefer OIDC."
+              "what": [
+                "Create PR checks that block broken builds/tests.",
+                "Create a main-branch workflow that produces a deployable artifact and deploys it.",
+                "Add dependency update automation and a basic security scan."
               ],
-              "recommendations": [
-                "Fail fast: lint/test/build before deploy steps."
+              "decisions": [],
+              "doneWhen": [
+                "A PR cannot merge if checks fail.",
+                "A merge to main results in a deploy (or a clearly reported failure)."
+              ],
+              "avoid": [
+                "Running deploy steps on untrusted PRs."
               ]
             },
             {
               "text": "Cache dependencies where safe",
-              "instructions": [
-                "Run the workflow on a PR and confirm it blocks bad changes.",
-                "Keep secrets out of the repo; prefer OIDC."
+              "what": [
+                "Create PR checks that block broken builds/tests.",
+                "Create a main-branch workflow that produces a deployable artifact and deploys it.",
+                "Add dependency update automation and a basic security scan."
               ],
-              "recommendations": [
-                "Fail fast: lint/test/build before deploy steps."
+              "decisions": [],
+              "doneWhen": [
+                "A PR cannot merge if checks fail.",
+                "A merge to main results in a deploy (or a clearly reported failure)."
+              ],
+              "avoid": [
+                "Running deploy steps on untrusted PRs."
               ]
             },
             {
               "text": "Add basic security scanning (Trivy or similar)",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             },
             {
               "text": "Add Dependabot",
-              "instructions": [
-                "Run the workflow on a PR and confirm it blocks bad changes.",
-                "Keep secrets out of the repo; prefer OIDC."
+              "what": [
+                "Create PR checks that block broken builds/tests.",
+                "Create a main-branch workflow that produces a deployable artifact and deploys it.",
+                "Add dependency update automation and a basic security scan."
               ],
-              "recommendations": [
-                "Fail fast: lint/test/build before deploy steps."
+              "decisions": [],
+              "doneWhen": [
+                "A PR cannot merge if checks fail.",
+                "A merge to main results in a deploy (or a clearly reported failure)."
+              ],
+              "avoid": [
+                "Running deploy steps on untrusted PRs."
               ]
             },
             {
               "text": "Document: what the pipeline checks and why",
-              "instructions": [
-                "Write it as if future-you is sleep-deprived and debugging.",
-                "Add copy-pastable commands."
+              "what": [
+                "Create PR checks that block broken builds/tests.",
+                "Create a main-branch workflow that produces a deployable artifact and deploys it.",
+                "Add dependency update automation and a basic security scan.",
+                "Write short docs that explain purpose, steps, and what “good” looks like.",
+                "Include both Console locations and CLI terms (so you can search later)."
               ],
-              "recommendations": [
-                "Include “expected output” for key commands when possible."
+              "decisions": [],
+              "doneWhen": [
+                "A PR cannot merge if checks fail.",
+                "A merge to main results in a deploy (or a clearly reported failure).",
+                "Someone else can follow your doc to reproduce the result."
+              ],
+              "avoid": [
+                "Running deploy steps on untrusted PRs."
               ]
             }
           ]
@@ -716,63 +953,77 @@
           "tasks": [
             {
               "text": "Provision ECR via Terraform",
-              "instructions": [
-                "Create/adjust Terraform code for this change.",
-                "Run: terraform fmt && terraform validate.",
-                "Run: terraform plan and read the diff before applying.",
-                "Build locally once, then automate in CI.",
-                "Tag images with commit SHA and keep latest optional."
+              "what": [
+                "Create an ECR repository.",
+                "Decide image tagging strategy (SHA, semver, latest).",
+                "Make the cluster able to pull the image."
               ],
-              "recommendations": [
-                "Prefer small, reviewable commits.",
-                "Keep state remote and locked (S3 + DynamoDB).",
-                "Keep images small (multi-stage builds) when possible."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "A new image is available in ECR and your deployment can pull it."
+              ],
+              "avoid": []
             },
             {
               "text": "Add workflow to build + push image on main",
-              "instructions": [
-                "Run the workflow on a PR and confirm it blocks bad changes.",
-                "Keep secrets out of the repo; prefer OIDC.",
-                "Build locally once, then automate in CI.",
-                "Tag images with commit SHA and keep latest optional."
+              "what": [
+                "Create PR checks that block broken builds/tests.",
+                "Create a main-branch workflow that produces a deployable artifact and deploys it.",
+                "Add dependency update automation and a basic security scan.",
+                "Create an ECR repository.",
+                "Decide image tagging strategy (SHA, semver, latest)."
               ],
-              "recommendations": [
-                "Fail fast: lint/test/build before deploy steps.",
-                "Keep images small (multi-stage builds) when possible."
+              "decisions": [],
+              "doneWhen": [
+                "A PR cannot merge if checks fail.",
+                "A merge to main results in a deploy (or a clearly reported failure).",
+                "A new image is available in ECR and your deployment can pull it."
+              ],
+              "avoid": [
+                "Running deploy steps on untrusted PRs."
               ]
             },
             {
               "text": "Tag images with commit SHA",
-              "instructions": [
-                "Build locally once, then automate in CI.",
-                "Tag images with commit SHA and keep latest optional."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Keep images small (multi-stage builds) when possible."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             },
             {
               "text": "Document: image naming and retention",
-              "instructions": [
-                "Build locally once, then automate in CI.",
-                "Tag images with commit SHA and keep latest optional.",
-                "Write it as if future-you is sleep-deprived and debugging.",
-                "Add copy-pastable commands."
+              "what": [
+                "Write short docs that explain purpose, steps, and what “good” looks like.",
+                "Include both Console locations and CLI terms (so you can search later)."
               ],
-              "recommendations": [
-                "Keep images small (multi-stage builds) when possible.",
-                "Include “expected output” for key commands when possible."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "Someone else can follow your doc to reproduce the result."
+              ],
+              "avoid": []
             },
             {
               "text": "Verify pull from cluster",
-              "instructions": [
-                "After changes, verify: kubectl get nodes,pods -A",
-                "Confirm addons are healthy (metrics-server, CSI drivers)."
+              "what": [
+                "Create an EKS cluster and a managed node group sized for your lab.",
+                "Ensure you can access the cluster (kubectl configured) and list nodes/pods.",
+                "Install core addons you’ll rely on (metrics, storage driver)."
               ],
-              "recommendations": [
-                "Write a quick runbook: how to regain access if kubeconfig breaks."
+              "decisions": [
+                "Cluster version and upgrade strategy (even for a lab).",
+                "Node instance types (cost vs capacity)."
+              ],
+              "doneWhen": [
+                "Nodes show as Ready and system pods are healthy.",
+                "You can deploy a simple test workload and delete it."
+              ],
+              "avoid": [
+                "Skipping cluster access documentation (future-you will suffer)."
               ]
             }
           ]
@@ -783,55 +1034,80 @@
           "tasks": [
             {
               "text": "Configure GitHub OIDC provider in AWS",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Connect GitHub Actions to AWS using OIDC so you don’t store long-lived keys.",
+                "Create a minimal IAM role for CI with only the permissions needed.",
+                "Document what the role can do and why."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
+              "decisions": [],
+              "doneWhen": [
+                "CI deploys without any AWS access keys stored in GitHub secrets.",
+                "Role permissions are auditable and minimal."
+              ],
+              "avoid": [
+                "Giving CI admin permissions “just to make it work”."
               ]
             },
             {
               "text": "Create least-privilege role for CI",
-              "instructions": [
-                "Run the workflow on a PR and confirm it blocks bad changes.",
-                "Keep secrets out of the repo; prefer OIDC."
+              "what": [
+                "Create PR checks that block broken builds/tests.",
+                "Create a main-branch workflow that produces a deployable artifact and deploys it.",
+                "Add dependency update automation and a basic security scan."
               ],
-              "recommendations": [
-                "Fail fast: lint/test/build before deploy steps."
+              "decisions": [],
+              "doneWhen": [
+                "A PR cannot merge if checks fail.",
+                "A merge to main results in a deploy (or a clearly reported failure)."
+              ],
+              "avoid": [
+                "Running deploy steps on untrusted PRs."
               ]
             },
             {
               "text": "Update workflow to assume role via OIDC",
-              "instructions": [
-                "Run the workflow on a PR and confirm it blocks bad changes.",
-                "Keep secrets out of the repo; prefer OIDC."
+              "what": [
+                "Create PR checks that block broken builds/tests.",
+                "Create a main-branch workflow that produces a deployable artifact and deploys it.",
+                "Add dependency update automation and a basic security scan.",
+                "Connect GitHub Actions to AWS using OIDC so you don’t store long-lived keys.",
+                "Create a minimal IAM role for CI with only the permissions needed."
               ],
-              "recommendations": [
-                "Fail fast: lint/test/build before deploy steps."
+              "decisions": [],
+              "doneWhen": [
+                "A PR cannot merge if checks fail.",
+                "A merge to main results in a deploy (or a clearly reported failure).",
+                "CI deploys without any AWS access keys stored in GitHub secrets.",
+                "Role permissions are auditable and minimal."
+              ],
+              "avoid": [
+                "Running deploy steps on untrusted PRs.",
+                "Giving CI admin permissions “just to make it work”."
               ]
             },
             {
               "text": "Write docs: permissions model",
-              "instructions": [
-                "Write it as if future-you is sleep-deprived and debugging.",
-                "Add copy-pastable commands."
+              "what": [
+                "Write short docs that explain purpose, steps, and what “good” looks like.",
+                "Include both Console locations and CLI terms (so you can search later)."
               ],
-              "recommendations": [
-                "Include “expected output” for key commands when possible."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "Someone else can follow your doc to reproduce the result."
+              ],
+              "avoid": []
             },
             {
               "text": "Audit: ensure no long-lived AWS keys are used",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             }
           ]
         },
@@ -841,66 +1117,90 @@
           "tasks": [
             {
               "text": "Deploy to EKS via Helm in CI",
-              "instructions": [
-                "After changes, verify: kubectl get nodes,pods -A",
-                "Confirm addons are healthy (metrics-server, CSI drivers).",
-                "Run the workflow on a PR and confirm it blocks bad changes.",
-                "Keep secrets out of the repo; prefer OIDC.",
-                "Add values.yaml defaults and document required values."
+              "what": [
+                "Create an EKS cluster and a managed node group sized for your lab.",
+                "Ensure you can access the cluster (kubectl configured) and list nodes/pods.",
+                "Install core addons you’ll rely on (metrics, storage driver).",
+                "Create a Helm chart that deploys your app with sane defaults.",
+                "Include resource limits, probes, and configuration via values."
               ],
-              "recommendations": [
-                "Write a quick runbook: how to regain access if kubeconfig breaks.",
-                "Fail fast: lint/test/build before deploy steps.",
-                "Keep templates simple; avoid clever logic."
+              "decisions": [
+                "Cluster version and upgrade strategy (even for a lab).",
+                "Node instance types (cost vs capacity)."
+              ],
+              "doneWhen": [
+                "Nodes show as Ready and system pods are healthy.",
+                "You can deploy a simple test workload and delete it.",
+                "A fresh cluster can install the chart and the app becomes reachable.",
+                "You can upgrade and rollback reliably."
+              ],
+              "avoid": [
+                "Skipping cluster access documentation (future-you will suffer).",
+                "Hardcoding secrets/URLs inside templates.",
+                "Running deploy steps on untrusted PRs."
               ]
             },
             {
               "text": "Add rollback strategy (helm rollback) documented",
-              "instructions": [
-                "Add values.yaml defaults and document required values.",
-                "Use probes + requests/limits in the chart.",
-                "Write it as if future-you is sleep-deprived and debugging.",
-                "Add copy-pastable commands."
+              "what": [
+                "Create a Helm chart that deploys your app with sane defaults.",
+                "Include resource limits, probes, and configuration via values.",
+                "Make it easy to override settings per environment.",
+                "Write short docs that explain purpose, steps, and what “good” looks like.",
+                "Include both Console locations and CLI terms (so you can search later)."
               ],
-              "recommendations": [
-                "Keep templates simple; avoid clever logic.",
-                "Include “expected output” for key commands when possible."
+              "decisions": [],
+              "doneWhen": [
+                "A fresh cluster can install the chart and the app becomes reachable.",
+                "You can upgrade and rollback reliably.",
+                "Someone else can follow your doc to reproduce the result."
+              ],
+              "avoid": [
+                "Hardcoding secrets/URLs inside templates."
               ]
             },
             {
               "text": "Add a manual approval step for prod (optional)",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             },
             {
               "text": "Write docs/cicd.md describing the full flow",
-              "instructions": [
-                "Run the workflow on a PR and confirm it blocks bad changes.",
-                "Keep secrets out of the repo; prefer OIDC.",
-                "Write it as if future-you is sleep-deprived and debugging.",
-                "Add copy-pastable commands."
+              "what": [
+                "Create PR checks that block broken builds/tests.",
+                "Create a main-branch workflow that produces a deployable artifact and deploys it.",
+                "Add dependency update automation and a basic security scan.",
+                "Write short docs that explain purpose, steps, and what “good” looks like.",
+                "Include both Console locations and CLI terms (so you can search later)."
               ],
-              "recommendations": [
-                "Fail fast: lint/test/build before deploy steps.",
-                "Include “expected output” for key commands when possible."
+              "decisions": [],
+              "doneWhen": [
+                "A PR cannot merge if checks fail.",
+                "A merge to main results in a deploy (or a clearly reported failure).",
+                "Someone else can follow your doc to reproduce the result."
+              ],
+              "avoid": [
+                "Running deploy steps on untrusted PRs."
               ]
             },
             {
               "text": "End-to-day: do a real code change and watch it deploy",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             }
           ]
         },
@@ -910,57 +1210,63 @@
           "tasks": [
             {
               "text": "Create per-PR namespace deployments (optional)",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             },
             {
               "text": "Auto-destroy on PR close",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             },
             {
               "text": "Document costs + when to use previews",
-              "instructions": [
-                "Write it as if future-you is sleep-deprived and debugging.",
-                "Add copy-pastable commands."
+              "what": [
+                "Write short docs that explain purpose, steps, and what “good” looks like.",
+                "Include both Console locations and CLI terms (so you can search later)."
               ],
-              "recommendations": [
-                "Include “expected output” for key commands when possible."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "Someone else can follow your doc to reproduce the result."
+              ],
+              "avoid": []
             },
             {
               "text": "Add a ‘how to test a PR deployment’ guide",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             },
             {
               "text": "End-of-week review: keep or drop preview envs",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             }
           ]
         }
@@ -976,56 +1282,77 @@
           "tasks": [
             {
               "text": "Install kube-prometheus-stack",
-              "instructions": [
-                "Create at least one dashboard that answers: “is the service healthy?”",
-                "Add 1–2 alerts and test they fire."
+              "what": [
+                "Set up a metrics and dashboard view that answers “is it healthy?” quickly.",
+                "Add 1–3 alerts that are actionable (crashloop, restarts, node pressure).",
+                "Set up logs so you can trace a request or error when something breaks."
               ],
-              "recommendations": [
-                "Prefer actionable alerts; avoid noisy ones."
+              "decisions": [],
+              "doneWhen": [
+                "You can detect a failure within minutes and find a likely cause using dashboards/logs."
+              ],
+              "avoid": [
+                "Too many alerts (noise) before you have solid runbooks."
               ]
             },
             {
               "text": "Expose Grafana safely (port-forward is OK)",
-              "instructions": [
-                "Create at least one dashboard that answers: “is the service healthy?”",
-                "Add 1–2 alerts and test they fire."
+              "what": [
+                "Set up a metrics and dashboard view that answers “is it healthy?” quickly.",
+                "Add 1–3 alerts that are actionable (crashloop, restarts, node pressure).",
+                "Set up logs so you can trace a request or error when something breaks."
               ],
-              "recommendations": [
-                "Prefer actionable alerts; avoid noisy ones."
+              "decisions": [],
+              "doneWhen": [
+                "You can detect a failure within minutes and find a likely cause using dashboards/logs."
+              ],
+              "avoid": [
+                "Too many alerts (noise) before you have solid runbooks."
               ]
             },
             {
               "text": "Create a dashboard: pod restarts, CPU/mem, node pressure",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             },
             {
               "text": "Write runbooks/observability.md",
-              "instructions": [
-                "Create at least one dashboard that answers: “is the service healthy?”",
-                "Add 1–2 alerts and test they fire.",
-                "Write it as if future-you is sleep-deprived and debugging.",
-                "Add copy-pastable commands."
+              "what": [
+                "Set up a metrics and dashboard view that answers “is it healthy?” quickly.",
+                "Add 1–3 alerts that are actionable (crashloop, restarts, node pressure).",
+                "Set up logs so you can trace a request or error when something breaks.",
+                "Write short docs that explain purpose, steps, and what “good” looks like.",
+                "Include both Console locations and CLI terms (so you can search later)."
               ],
-              "recommendations": [
-                "Prefer actionable alerts; avoid noisy ones.",
-                "Include “expected output” for key commands when possible."
+              "decisions": [],
+              "doneWhen": [
+                "You can detect a failure within minutes and find a likely cause using dashboards/logs.",
+                "Someone else can follow your doc to reproduce the result."
+              ],
+              "avoid": [
+                "Too many alerts (noise) before you have solid runbooks."
               ]
             },
             {
               "text": "Commit: metrics online",
-              "instructions": [
-                "Create at least one dashboard that answers: “is the service healthy?”",
-                "Add 1–2 alerts and test they fire."
+              "what": [
+                "Set up a metrics and dashboard view that answers “is it healthy?” quickly.",
+                "Add 1–3 alerts that are actionable (crashloop, restarts, node pressure).",
+                "Set up logs so you can trace a request or error when something breaks."
               ],
-              "recommendations": [
-                "Prefer actionable alerts; avoid noisy ones."
+              "decisions": [],
+              "doneWhen": [
+                "You can detect a failure within minutes and find a likely cause using dashboards/logs."
+              ],
+              "avoid": [
+                "Too many alerts (noise) before you have solid runbooks."
               ]
             }
           ]
@@ -1036,55 +1363,71 @@
           "tasks": [
             {
               "text": "Add basic request metrics to app (optional)",
-              "instructions": [
-                "Create at least one dashboard that answers: “is the service healthy?”",
-                "Add 1–2 alerts and test they fire."
+              "what": [
+                "Set up a metrics and dashboard view that answers “is it healthy?” quickly.",
+                "Add 1–3 alerts that are actionable (crashloop, restarts, node pressure).",
+                "Set up logs so you can trace a request or error when something breaks."
               ],
-              "recommendations": [
-                "Prefer actionable alerts; avoid noisy ones."
+              "decisions": [],
+              "doneWhen": [
+                "You can detect a failure within minutes and find a likely cause using dashboards/logs."
+              ],
+              "avoid": [
+                "Too many alerts (noise) before you have solid runbooks."
               ]
             },
             {
               "text": "Dashboards: latency/error rate (even simple)",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             },
             {
               "text": "Document SLO-ish thinking (what matters)",
-              "instructions": [
-                "Write it as if future-you is sleep-deprived and debugging.",
-                "Add copy-pastable commands."
+              "what": [
+                "Write short docs that explain purpose, steps, and what “good” looks like.",
+                "Include both Console locations and CLI terms (so you can search later)."
               ],
-              "recommendations": [
-                "Include “expected output” for key commands when possible."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "Someone else can follow your doc to reproduce the result."
+              ],
+              "avoid": []
             },
             {
               "text": "Add alert rules for obvious failures",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Set up a metrics and dashboard view that answers “is it healthy?” quickly.",
+                "Add 1–3 alerts that are actionable (crashloop, restarts, node pressure).",
+                "Set up logs so you can trace a request or error when something breaks."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
+              "decisions": [],
+              "doneWhen": [
+                "You can detect a failure within minutes and find a likely cause using dashboards/logs."
+              ],
+              "avoid": [
+                "Too many alerts (noise) before you have solid runbooks."
               ]
             },
             {
               "text": "End-to-day: test alerts (simulate crashloop)",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Set up a metrics and dashboard view that answers “is it healthy?” quickly.",
+                "Add 1–3 alerts that are actionable (crashloop, restarts, node pressure).",
+                "Set up logs so you can trace a request or error when something breaks."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
+              "decisions": [],
+              "doneWhen": [
+                "You can detect a failure within minutes and find a likely cause using dashboards/logs."
+              ],
+              "avoid": [
+                "Too many alerts (noise) before you have solid runbooks."
               ]
             }
           ]
@@ -1095,55 +1438,72 @@
           "tasks": [
             {
               "text": "Choose logging path (CloudWatch is fine)",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             },
             {
               "text": "Ensure logs are accessible + searchable",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Set up a metrics and dashboard view that answers “is it healthy?” quickly.",
+                "Add 1–3 alerts that are actionable (crashloop, restarts, node pressure).",
+                "Set up logs so you can trace a request or error when something breaks."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
+              "decisions": [],
+              "doneWhen": [
+                "You can detect a failure within minutes and find a likely cause using dashboards/logs."
+              ],
+              "avoid": [
+                "Too many alerts (noise) before you have solid runbooks."
               ]
             },
             {
               "text": "Write ‘how to debug a 500’ runbook",
-              "instructions": [
-                "Write it as if future-you is sleep-deprived and debugging.",
-                "Add copy-pastable commands."
+              "what": [
+                "Write short docs that explain purpose, steps, and what “good” looks like.",
+                "Include both Console locations and CLI terms (so you can search later)."
               ],
-              "recommendations": [
-                "Include “expected output” for key commands when possible."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "Someone else can follow your doc to reproduce the result."
+              ],
+              "avoid": []
             },
             {
               "text": "Add structured logging (optional)",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             },
             {
               "text": "Commit: log pipeline documented",
-              "instructions": [
-                "Write it as if future-you is sleep-deprived and debugging.",
-                "Add copy-pastable commands."
+              "what": [
+                "Create PR checks that block broken builds/tests.",
+                "Create a main-branch workflow that produces a deployable artifact and deploys it.",
+                "Add dependency update automation and a basic security scan.",
+                "Write short docs that explain purpose, steps, and what “good” looks like.",
+                "Include both Console locations and CLI terms (so you can search later)."
               ],
-              "recommendations": [
-                "Include “expected output” for key commands when possible."
+              "decisions": [],
+              "doneWhen": [
+                "A PR cannot merge if checks fail.",
+                "A merge to main results in a deploy (or a clearly reported failure).",
+                "Someone else can follow your doc to reproduce the result."
+              ],
+              "avoid": [
+                "Running deploy steps on untrusted PRs."
               ]
             }
           ]
@@ -1154,55 +1514,73 @@
           "tasks": [
             {
               "text": "Write runbooks/alerts.md for each alert",
-              "instructions": [
-                "Write it as if future-you is sleep-deprived and debugging.",
-                "Add copy-pastable commands."
+              "what": [
+                "Set up a metrics and dashboard view that answers “is it healthy?” quickly.",
+                "Add 1–3 alerts that are actionable (crashloop, restarts, node pressure).",
+                "Set up logs so you can trace a request or error when something breaks.",
+                "Write short docs that explain purpose, steps, and what “good” looks like.",
+                "Include both Console locations and CLI terms (so you can search later)."
               ],
-              "recommendations": [
-                "Include “expected output” for key commands when possible."
+              "decisions": [],
+              "doneWhen": [
+                "You can detect a failure within minutes and find a likely cause using dashboards/logs.",
+                "Someone else can follow your doc to reproduce the result."
+              ],
+              "avoid": [
+                "Too many alerts (noise) before you have solid runbooks."
               ]
             },
             {
               "text": "Add ‘first 5 minutes’ checklist",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             },
             {
               "text": "Add ‘rollback now’ decision criteria",
-              "instructions": [
-                "Run the workflow on a PR and confirm it blocks bad changes.",
-                "Keep secrets out of the repo; prefer OIDC."
+              "what": [
+                "Create PR checks that block broken builds/tests.",
+                "Create a main-branch workflow that produces a deployable artifact and deploys it.",
+                "Add dependency update automation and a basic security scan."
               ],
-              "recommendations": [
-                "Fail fast: lint/test/build before deploy steps."
+              "decisions": [],
+              "doneWhen": [
+                "A PR cannot merge if checks fail.",
+                "A merge to main results in a deploy (or a clearly reported failure)."
+              ],
+              "avoid": [
+                "Running deploy steps on untrusted PRs."
               ]
             },
             {
               "text": "Test: break one thing and follow your playbook",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             },
             {
               "text": "Refine docs based on what was missing",
-              "instructions": [
-                "Write it as if future-you is sleep-deprived and debugging.",
-                "Add copy-pastable commands."
+              "what": [
+                "Write short docs that explain purpose, steps, and what “good” looks like.",
+                "Include both Console locations and CLI terms (so you can search later)."
               ],
-              "recommendations": [
-                "Include “expected output” for key commands when possible."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "Someone else can follow your doc to reproduce the result."
+              ],
+              "avoid": []
             }
           ]
         },
@@ -1212,56 +1590,63 @@
           "tasks": [
             {
               "text": "Review permissions (least privilege)",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             },
             {
               "text": "Review resource limits and autoscaling defaults",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             },
             {
               "text": "Consolidate docs into a clean table of contents",
-              "instructions": [
-                "Write it as if future-you is sleep-deprived and debugging.",
-                "Add copy-pastable commands."
+              "what": [
+                "Write short docs that explain purpose, steps, and what “good” looks like.",
+                "Include both Console locations and CLI terms (so you can search later)."
               ],
-              "recommendations": [
-                "Include “expected output” for key commands when possible."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "Someone else can follow your doc to reproduce the result."
+              ],
+              "avoid": []
             },
             {
               "text": "Add screenshots (dashboards) to docs",
-              "instructions": [
-                "Write it as if future-you is sleep-deprived and debugging.",
-                "Add copy-pastable commands."
+              "what": [
+                "Write short docs that explain purpose, steps, and what “good” looks like.",
+                "Include both Console locations and CLI terms (so you can search later)."
               ],
-              "recommendations": [
-                "Include “expected output” for key commands when possible."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "Someone else can follow your doc to reproduce the result."
+              ],
+              "avoid": []
             },
             {
               "text": "End-of-week review: where are you still shaky?",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             }
           ]
         }
@@ -1277,57 +1662,69 @@
           "tasks": [
             {
               "text": "Add HPA (CPU-based) and validate behavior",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             },
             {
               "text": "Add PodDisruptionBudget",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Enable MFA on the root account and your main admin identity.",
+                "Create a budget and at least one alert (email) for cost spikes.",
+                "Decide how you will authenticate day-to-day (IAM user vs SSO/roles) and write it down."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
+              "decisions": [
+                "Where to put this project (new AWS account vs separate environment in an existing account)."
+              ],
+              "doneWhen": [
+                "You can log in safely, MFA is required, and you receive a test budget alert."
+              ],
+              "avoid": [
+                "Leaving root without MFA.",
+                "Running resources without any budget alarm."
               ]
             },
             {
               "text": "Tune rollout strategy for safe deploys",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             },
             {
               "text": "Document: scaling and what triggers it",
-              "instructions": [
-                "Write it as if future-you is sleep-deprived and debugging.",
-                "Add copy-pastable commands."
+              "what": [
+                "Write short docs that explain purpose, steps, and what “good” looks like.",
+                "Include both Console locations and CLI terms (so you can search later)."
               ],
-              "recommendations": [
-                "Include “expected output” for key commands when possible."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "Someone else can follow your doc to reproduce the result."
+              ],
+              "avoid": []
             },
             {
               "text": "Commit: reliability controls in place",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             }
           ]
         },
@@ -1337,57 +1734,71 @@
           "tasks": [
             {
               "text": "Kill pods / delete deployment and observe recovery",
-              "instructions": [
-                "Create at least one dashboard that answers: “is the service healthy?”",
-                "Add 1–2 alerts and test they fire."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Prefer actionable alerts; avoid noisy ones."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             },
             {
               "text": "Check dashboards + logs during failure",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Set up a metrics and dashboard view that answers “is it healthy?” quickly.",
+                "Add 1–3 alerts that are actionable (crashloop, restarts, node pressure).",
+                "Set up logs so you can trace a request or error when something breaks."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
+              "decisions": [],
+              "doneWhen": [
+                "You can detect a failure within minutes and find a likely cause using dashboards/logs."
+              ],
+              "avoid": [
+                "Too many alerts (noise) before you have solid runbooks."
               ]
             },
             {
               "text": "Write postmortem: what happened, detection, fix",
-              "instructions": [
-                "Write: impact → timeline → root cause → fix → follow-ups.",
-                "Add at least one prevention action and implement it.",
-                "Write it as if future-you is sleep-deprived and debugging.",
-                "Add copy-pastable commands."
+              "what": [
+                "Break something on purpose (pods, config, or networking) and observe signals.",
+                "Write a postmortem: impact, timeline, root cause, fix, follow-ups.",
+                "Implement at least one follow-up improvement."
               ],
-              "recommendations": [
-                "Keep postmortems blameless; focus on system improvements.",
-                "Include “expected output” for key commands when possible."
+              "decisions": [],
+              "doneWhen": [
+                "You have a written postmortem and a concrete improvement merged."
+              ],
+              "avoid": [
+                "Writing “human error” as root cause without system prevention."
               ]
             },
             {
               "text": "Add a prevention action (if any)",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             },
             {
               "text": "Commit postmortem and improvements",
-              "instructions": [
-                "Write: impact → timeline → root cause → fix → follow-ups.",
-                "Add at least one prevention action and implement it."
+              "what": [
+                "Break something on purpose (pods, config, or networking) and observe signals.",
+                "Write a postmortem: impact, timeline, root cause, fix, follow-ups.",
+                "Implement at least one follow-up improvement."
               ],
-              "recommendations": [
-                "Keep postmortems blameless; focus on system improvements."
+              "decisions": [],
+              "doneWhen": [
+                "You have a written postmortem and a concrete improvement merged."
+              ],
+              "avoid": [
+                "Writing “human error” as root cause without system prevention."
               ]
             }
           ]
@@ -1398,60 +1809,75 @@
           "tasks": [
             {
               "text": "Deploy a bad config and see impact",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             },
             {
               "text": "Rollback using your documented procedure",
-              "instructions": [
-                "Write it as if future-you is sleep-deprived and debugging.",
-                "Add copy-pastable commands."
+              "what": [
+                "Write short docs that explain purpose, steps, and what “good” looks like.",
+                "Include both Console locations and CLI terms (so you can search later)."
               ],
-              "recommendations": [
-                "Include “expected output” for key commands when possible."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "Someone else can follow your doc to reproduce the result."
+              ],
+              "avoid": []
             },
             {
               "text": "Write postmortem (incident-002)",
-              "instructions": [
-                "Run the workflow on a PR and confirm it blocks bad changes.",
-                "Keep secrets out of the repo; prefer OIDC.",
-                "Write: impact → timeline → root cause → fix → follow-ups.",
-                "Add at least one prevention action and implement it.",
-                "Write it as if future-you is sleep-deprived and debugging."
+              "what": [
+                "Create PR checks that block broken builds/tests.",
+                "Create a main-branch workflow that produces a deployable artifact and deploys it.",
+                "Add dependency update automation and a basic security scan.",
+                "Break something on purpose (pods, config, or networking) and observe signals.",
+                "Write a postmortem: impact, timeline, root cause, fix, follow-ups."
               ],
-              "recommendations": [
-                "Fail fast: lint/test/build before deploy steps.",
-                "Keep postmortems blameless; focus on system improvements.",
-                "Include “expected output” for key commands when possible."
+              "decisions": [],
+              "doneWhen": [
+                "A PR cannot merge if checks fail.",
+                "A merge to main results in a deploy (or a clearly reported failure).",
+                "You have a written postmortem and a concrete improvement merged."
+              ],
+              "avoid": [
+                "Running deploy steps on untrusted PRs.",
+                "Writing “human error” as root cause without system prevention."
               ]
             },
             {
               "text": "Add guardrails in CI (if possible)",
-              "instructions": [
-                "Run the workflow on a PR and confirm it blocks bad changes.",
-                "Keep secrets out of the repo; prefer OIDC."
+              "what": [
+                "Create PR checks that block broken builds/tests.",
+                "Create a main-branch workflow that produces a deployable artifact and deploys it.",
+                "Add dependency update automation and a basic security scan."
               ],
-              "recommendations": [
-                "Fail fast: lint/test/build before deploy steps."
+              "decisions": [],
+              "doneWhen": [
+                "A PR cannot merge if checks fail.",
+                "A merge to main results in a deploy (or a clearly reported failure)."
+              ],
+              "avoid": [
+                "Running deploy steps on untrusted PRs."
               ]
             },
             {
               "text": "Commit",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             }
           ]
         },
@@ -1461,55 +1887,70 @@
           "tasks": [
             {
               "text": "Write a troubleshooting section in README",
-              "instructions": [
-                "Write it as if future-you is sleep-deprived and debugging.",
-                "Add copy-pastable commands."
+              "what": [
+                "Write short docs that explain purpose, steps, and what “good” looks like.",
+                "Include both Console locations and CLI terms (so you can search later)."
               ],
-              "recommendations": [
-                "Include “expected output” for key commands when possible."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "Someone else can follow your doc to reproduce the result."
+              ],
+              "avoid": []
             },
             {
               "text": "Include: CrashLoopBackOff, ImagePullBackOff, 502/503",
-              "instructions": [
-                "Build locally once, then automate in CI.",
-                "Tag images with commit SHA and keep latest optional."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Keep images small (multi-stage builds) when possible."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             },
             {
               "text": "Add quick kubectl commands cheat sheet",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Create an EKS cluster and a managed node group sized for your lab.",
+                "Ensure you can access the cluster (kubectl configured) and list nodes/pods.",
+                "Install core addons you’ll rely on (metrics, storage driver)."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
+              "decisions": [
+                "Cluster version and upgrade strategy (even for a lab).",
+                "Node instance types (cost vs capacity)."
+              ],
+              "doneWhen": [
+                "Nodes show as Ready and system pods are healthy.",
+                "You can deploy a simple test workload and delete it."
+              ],
+              "avoid": [
+                "Skipping cluster access documentation (future-you will suffer)."
               ]
             },
             {
               "text": "Ensure docs are beginner-friendly (future-you)",
-              "instructions": [
-                "Write it as if future-you is sleep-deprived and debugging.",
-                "Add copy-pastable commands."
+              "what": [
+                "Write short docs that explain purpose, steps, and what “good” looks like.",
+                "Include both Console locations and CLI terms (so you can search later)."
               ],
-              "recommendations": [
-                "Include “expected output” for key commands when possible."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "Someone else can follow your doc to reproduce the result."
+              ],
+              "avoid": []
             },
             {
               "text": "Commit",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             }
           ]
         },
@@ -1519,56 +1960,69 @@
           "tasks": [
             {
               "text": "Do a clean deploy from scratch (infra → app)",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             },
             {
               "text": "Record a 2–3 minute demo (screen capture)",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Turn your work into evidence: concise bullets, screenshots, and a short demo.",
+                "Make your repo easy to understand in 60 seconds.",
+                "Start an apply-and-feedback loop and iterate."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "Your CV/LinkedIn points to a project with clear proof (docs + demo)."
+              ],
+              "avoid": []
             },
             {
               "text": "Validate: CI deploys, dashboards, rollback",
-              "instructions": [
-                "Run the workflow on a PR and confirm it blocks bad changes.",
-                "Keep secrets out of the repo; prefer OIDC."
+              "what": [
+                "Create PR checks that block broken builds/tests.",
+                "Create a main-branch workflow that produces a deployable artifact and deploys it.",
+                "Add dependency update automation and a basic security scan."
               ],
-              "recommendations": [
-                "Fail fast: lint/test/build before deploy steps."
+              "decisions": [],
+              "doneWhen": [
+                "A PR cannot merge if checks fail.",
+                "A merge to main results in a deploy (or a clearly reported failure)."
+              ],
+              "avoid": [
+                "Running deploy steps on untrusted PRs."
               ]
             },
             {
               "text": "Write ‘demo script’ notes",
-              "instructions": [
-                "Write it as if future-you is sleep-deprived and debugging.",
-                "Add copy-pastable commands."
+              "what": [
+                "Turn your work into evidence: concise bullets, screenshots, and a short demo.",
+                "Make your repo easy to understand in 60 seconds.",
+                "Start an apply-and-feedback loop and iterate."
               ],
-              "recommendations": [
-                "Include “expected output” for key commands when possible."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "Your CV/LinkedIn points to a project with clear proof (docs + demo)."
+              ],
+              "avoid": []
             },
             {
               "text": "End-of-week review: list remaining gaps",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             }
           ]
         }
@@ -1584,61 +2038,77 @@
           "tasks": [
             {
               "text": "Write CV bullets mapping to your project evidence",
-              "instructions": [
-                "Write it as if future-you is sleep-deprived and debugging.",
-                "Add copy-pastable commands."
+              "what": [
+                "Turn your work into evidence: concise bullets, screenshots, and a short demo.",
+                "Make your repo easy to understand in 60 seconds.",
+                "Start an apply-and-feedback loop and iterate."
               ],
-              "recommendations": [
-                "Include “expected output” for key commands when possible."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "Your CV/LinkedIn points to a project with clear proof (docs + demo)."
+              ],
+              "avoid": []
             },
             {
               "text": "Add keyword coverage (EKS, Terraform, OIDC, Helm)",
-              "instructions": [
-                "Create/adjust Terraform code for this change.",
-                "Run: terraform fmt && terraform validate.",
-                "Run: terraform plan and read the diff before applying.",
-                "After changes, verify: kubectl get nodes,pods -A",
-                "Confirm addons are healthy (metrics-server, CSI drivers)."
+              "what": [
+                "Create an EKS cluster and a managed node group sized for your lab.",
+                "Ensure you can access the cluster (kubectl configured) and list nodes/pods.",
+                "Install core addons you’ll rely on (metrics, storage driver).",
+                "Create a Helm chart that deploys your app with sane defaults.",
+                "Include resource limits, probes, and configuration via values."
               ],
-              "recommendations": [
-                "Prefer small, reviewable commits.",
-                "Keep state remote and locked (S3 + DynamoDB).",
-                "Write a quick runbook: how to regain access if kubeconfig breaks.",
-                "Keep templates simple; avoid clever logic."
+              "decisions": [
+                "Cluster version and upgrade strategy (even for a lab).",
+                "Node instance types (cost vs capacity)."
+              ],
+              "doneWhen": [
+                "Nodes show as Ready and system pods are healthy.",
+                "You can deploy a simple test workload and delete it.",
+                "A fresh cluster can install the chart and the app becomes reachable.",
+                "You can upgrade and rollback reliably."
+              ],
+              "avoid": [
+                "Skipping cluster access documentation (future-you will suffer).",
+                "Hardcoding secrets/URLs inside templates.",
+                "Giving CI admin permissions “just to make it work”."
               ]
             },
             {
               "text": "Create a 1-page summary in docs/for-hiring.md",
-              "instructions": [
-                "Write it as if future-you is sleep-deprived and debugging.",
-                "Add copy-pastable commands."
+              "what": [
+                "Write short docs that explain purpose, steps, and what “good” looks like.",
+                "Include both Console locations and CLI terms (so you can search later)."
               ],
-              "recommendations": [
-                "Include “expected output” for key commands when possible."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "Someone else can follow your doc to reproduce the result."
+              ],
+              "avoid": []
             },
             {
               "text": "Sanity-check: no fluff, only proof",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             },
             {
               "text": "Commit",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             }
           ]
         },
@@ -1648,56 +2118,69 @@
           "tasks": [
             {
               "text": "Update LinkedIn headline + about section",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Turn your work into evidence: concise bullets, screenshots, and a short demo.",
+                "Make your repo easy to understand in 60 seconds.",
+                "Start an apply-and-feedback loop and iterate."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "Your CV/LinkedIn points to a project with clear proof (docs + demo)."
+              ],
+              "avoid": []
             },
             {
               "text": "Pin/feature the repo and demo video",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Turn your work into evidence: concise bullets, screenshots, and a short demo.",
+                "Make your repo easy to understand in 60 seconds.",
+                "Start an apply-and-feedback loop and iterate."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "Your CV/LinkedIn points to a project with clear proof (docs + demo)."
+              ],
+              "avoid": []
             },
             {
               "text": "Clean README with sections + screenshots",
-              "instructions": [
-                "Write it as if future-you is sleep-deprived and debugging.",
-                "Add copy-pastable commands."
+              "what": [
+                "Write short docs that explain purpose, steps, and what “good” looks like.",
+                "Include both Console locations and CLI terms (so you can search later)."
               ],
-              "recommendations": [
-                "Include “expected output” for key commands when possible."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "Someone else can follow your doc to reproduce the result."
+              ],
+              "avoid": []
             },
             {
               "text": "Add badges for CI",
-              "instructions": [
-                "Run the workflow on a PR and confirm it blocks bad changes.",
-                "Keep secrets out of the repo; prefer OIDC."
+              "what": [
+                "Create PR checks that block broken builds/tests.",
+                "Create a main-branch workflow that produces a deployable artifact and deploys it.",
+                "Add dependency update automation and a basic security scan."
               ],
-              "recommendations": [
-                "Fail fast: lint/test/build before deploy steps."
+              "decisions": [],
+              "doneWhen": [
+                "A PR cannot merge if checks fail.",
+                "A merge to main results in a deploy (or a clearly reported failure)."
+              ],
+              "avoid": [
+                "Running deploy steps on untrusted PRs."
               ]
             },
             {
               "text": "Commit",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             }
           ]
         },
@@ -1707,56 +2190,67 @@
           "tasks": [
             {
               "text": "Practice explaining Deployments/Services/Ingress",
-              "instructions": [
-                "Verify the ALB target group health checks match your readiness endpoint.",
-                "Debug with: kubectl describe ingress + controller logs."
+              "what": [
+                "Install/configure the AWS Load Balancer Controller in the cluster.",
+                "Expose your service through an Ingress and confirm traffic reaches your pods.",
+                "Understand and document what health checks are used and where."
               ],
-              "recommendations": [
-                "Write down the 3 most common 502/503 causes and how to detect each."
+              "decisions": [],
+              "doneWhen": [
+                "You can hit the app from the internet and get a successful response.",
+                "You know where to look when you get 502/503 (Ingress, Service, Pod readiness, controller logs)."
+              ],
+              "avoid": [
+                "Mismatch between readiness path/port and ALB health check settings."
               ]
             },
             {
               "text": "Debug drill: CrashLoopBackOff scenario",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             },
             {
               "text": "Explain resources/probes/HPA",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             },
             {
               "text": "Write flashcards / battle card",
-              "instructions": [
-                "Write it as if future-you is sleep-deprived and debugging.",
-                "Add copy-pastable commands."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Include “expected output” for key commands when possible."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             },
             {
               "text": "1 mock interview (self-record)",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             }
           ]
         },
@@ -1766,58 +2260,74 @@
           "tasks": [
             {
               "text": "Explain VPC/subnets/NAT/Security Groups",
-              "instructions": [
-                "Draw the network flow: client → ALB → nodes → pods.",
-                "Verify routes and security groups allow the traffic you expect."
+              "what": [
+                "Design a VPC with public and private subnets across 2 availability zones.",
+                "Set routing so public subnets reach the internet, and private subnets reach the internet via NAT.",
+                "Define security groups with minimal inbound access and clear intent."
               ],
-              "recommendations": [
-                "Document tradeoffs (1 NAT vs 2 NATs)."
+              "decisions": [
+                "Single NAT (cheaper) vs one NAT per AZ (more resilient)."
+              ],
+              "doneWhen": [
+                "You can explain the traffic path from “internet → load balancer → nodes → pods” on a diagram.",
+                "Instances/pods in private subnets can reach the internet (for updates/pulling images) without being publicly reachable."
+              ],
+              "avoid": [
+                "Putting worker nodes in public subnets unless you have a strong reason.",
+                "Overly permissive 0.0.0.0/0 inbound rules."
               ]
             },
             {
               "text": "Explain IAM least privilege + OIDC",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Connect GitHub Actions to AWS using OIDC so you don’t store long-lived keys.",
+                "Create a minimal IAM role for CI with only the permissions needed.",
+                "Document what the role can do and why."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
+              "decisions": [],
+              "doneWhen": [
+                "CI deploys without any AWS access keys stored in GitHub secrets.",
+                "Role permissions are auditable and minimal."
+              ],
+              "avoid": [
+                "Giving CI admin permissions “just to make it work”."
               ]
             },
             {
               "text": "Explain Terraform state/drift/modules",
-              "instructions": [
-                "Create/adjust Terraform code for this change.",
-                "Run: terraform fmt && terraform validate.",
-                "Run: terraform plan and read the diff before applying."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Prefer small, reviewable commits.",
-                "Keep state remote and locked (S3 + DynamoDB)."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             },
             {
               "text": "Debug drill: networking reachability",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             },
             {
               "text": "Update battle card",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             }
           ]
         },
@@ -1827,58 +2337,65 @@
           "tasks": [
             {
               "text": "Create a target company list (20–30)",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             },
             {
               "text": "Apply to 5 roles/day for 1 week",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Turn your work into evidence: concise bullets, screenshots, and a short demo.",
+                "Make your repo easy to understand in 60 seconds.",
+                "Start an apply-and-feedback loop and iterate."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "Your CV/LinkedIn points to a project with clear proof (docs + demo)."
+              ],
+              "avoid": []
             },
             {
               "text": "Track applications and outcomes",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             },
             {
               "text": "Refine CV based on rejections",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Turn your work into evidence: concise bullets, screenshots, and a short demo.",
+                "Make your repo easy to understand in 60 seconds.",
+                "Start an apply-and-feedback loop and iterate."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "Your CV/LinkedIn points to a project with clear proof (docs + demo)."
+              ],
+              "avoid": []
             },
             {
               "text": "Schedule 2 mock interviews with a friend or online",
-              "instructions": [
-                "Do the task end-to-end.",
-                "Verify it works (quick check).",
-                "Write 2–3 lines of notes: what you learned + pitfalls."
+              "what": [
+                "Complete the task end-to-end.",
+                "Write down what you created/changed, and why."
               ],
-              "recommendations": [
-                "Keep scope small and ship daily."
-              ]
+              "decisions": [],
+              "doneWhen": [
+                "You can explain what you changed and verify it works in the AWS Console and in the cluster/app."
+              ],
+              "avoid": []
             }
           ]
         }

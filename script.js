@@ -111,8 +111,10 @@ function renderTree() {
       const taskUl = el('ul', { class: 'tasklist' });
       tasks.forEach((task, ti) => {
         const text = typeof task === 'string' ? task : task.text;
-        const instructions = typeof task === 'string' ? [] : (task.instructions || []);
-        const recommendations = typeof task === 'string' ? [] : (task.recommendations || []);
+        const what = typeof task === 'string' ? [] : (task.what || []);
+        const decisions = typeof task === 'string' ? [] : (task.decisions || []);
+        const doneWhen = typeof task === 'string' ? [] : (task.doneWhen || []);
+        const avoid = typeof task === 'string' ? [] : (task.avoid || []);
 
         const id = taskId(wi, di, ti);
         const checked = !!progress[id];
@@ -136,14 +138,24 @@ function renderTree() {
 
         const li = el('li', { class: `task ${checked ? 'done' : ''}` }, [label]);
 
-        if (instructions.length || recommendations.length) {
+        if (what.length || decisions.length || doneWhen.length || avoid.length) {
           const more = el('details', { class: 'acc', style: 'margin-top:.45rem' }, [
-            el('summary', {}, [el('div', { class: 'title' }, ['Instructions & recommendations']), el('div', { class: 'meta' }, ['How to do it well'])]),
+            el('summary', {}, [
+              el('div', { class: 'title' }, ['How to do it']),
+              el('div', { class: 'meta' }, ['Plain-language guidance (Console/CLI aware)'])
+            ]),
             el('div', { class: 'body' }, [
-              instructions.length ? el('h4', {}, ['Instructions']) : null,
-              instructions.length ? el('ul', {}, instructions.map((x) => el('li', {}, [x]))) : null,
-              recommendations.length ? el('h4', {}, ['Recommendations']) : null,
-              recommendations.length ? el('ul', {}, recommendations.map((x) => el('li', {}, [x]))) : null,
+              what.length ? el('h4', {}, ['What to do']) : null,
+              what.length ? el('ul', {}, what.map((x) => el('li', {}, [x]))) : null,
+
+              decisions.length ? el('h4', {}, ['Decisions']) : null,
+              decisions.length ? el('ul', {}, decisions.map((x) => el('li', {}, [x]))) : null,
+
+              doneWhen.length ? el('h4', {}, ['Done when']) : null,
+              doneWhen.length ? el('ul', {}, doneWhen.map((x) => el('li', {}, [x]))) : null,
+
+              avoid.length ? el('h4', {}, ['Avoid']) : null,
+              avoid.length ? el('ul', {}, avoid.map((x) => el('li', {}, [x]))) : null
             ])
           ]);
           li.appendChild(more);
@@ -330,10 +342,171 @@ function addAnchoredHeadings() {
   });
 }
 
-renderChips();
-renderTree();
-renderWeeks();
-renderSkillTree();
-renderInterviews();
-renderChecklists();
+function flattenDays() {
+  const out = [];
+  data.weeks.forEach((w, wi) => {
+    (w.days || []).forEach((d, di) => {
+      out.push({ w, d, wi, di });
+    });
+  });
+  return out;
+}
+
+function dayProgress(wi, di) {
+  const w = data.weeks[wi];
+  const d = w?.days?.[di];
+  const tasks = Array.isArray(d?.tasks) ? d.tasks : [];
+  let total = tasks.length;
+  let done = 0;
+  tasks.forEach((_t, ti) => {
+    if (progress[taskId(wi, di, ti)]) done++;
+  });
+  return { total, done, pct: total ? Math.round((done / total) * 100) : 0 };
+}
+
+function renderDailyPage() {
+  const flat = flattenDays();
+  const cal = $('#calendar');
+  const dayTitle = $('#dayTitle');
+  const dayMeta = $('#dayMeta');
+  const dayBody = $('#dayBody');
+  if (!cal || !dayTitle || !dayMeta || !dayBody) return;
+
+  const url = new URL(window.location.href);
+  const initial = Number(url.searchParams.get('day') || '1');
+  let selectedIndex = Number.isFinite(initial) ? Math.max(1, Math.min(flat.length, initial)) : 1;
+
+  function selectDay(n) {
+    selectedIndex = n;
+    url.searchParams.set('day', String(n));
+    window.history.replaceState({}, '', url);
+    draw();
+  }
+
+  function draw() {
+    cal.innerHTML = '';
+
+    flat.forEach(({ w, d, wi, di }, idx) => {
+      const dayNum = idx + 1;
+      const dp = dayProgress(wi, di);
+      const pressed = dayNum === selectedIndex;
+
+      const btn = el('button', {
+        type: 'button',
+        class: 'cal-btn',
+        'aria-pressed': pressed ? 'true' : 'false',
+        onclick: () => selectDay(dayNum)
+      }, [
+        el('div', { class: 'n' }, [`Day ${dayNum}`]),
+        el('div', { class: 't' }, [d.title || w.title]),
+        el('div', { class: 'p' }, [
+          el('span', { class: `cal-dot ${dp.pct === 100 ? 'done' : ''}`, 'aria-hidden': 'true' }),
+          el('span', {}, [`${dp.done}/${dp.total}`])
+        ])
+      ]);
+
+      cal.appendChild(btn);
+    });
+
+    const chosen = flat[selectedIndex - 1];
+    if (!chosen) return;
+
+    const { w, d, wi, di } = chosen;
+    dayTitle.textContent = `Day ${selectedIndex} — ${d.title}`;
+    dayMeta.textContent = d.focus ? `Focus: ${d.focus}` : '4h/day';
+
+    const tasks = Array.isArray(d.tasks) ? d.tasks : [];
+    const list = el('ul', { class: 'tasklist' });
+
+    tasks.forEach((task, ti) => {
+      const text = typeof task === 'string' ? task : task.text;
+      const what = typeof task === 'string' ? [] : (task.what || []);
+      const decisions = typeof task === 'string' ? [] : (task.decisions || []);
+      const doneWhen = typeof task === 'string' ? [] : (task.doneWhen || []);
+      const avoid = typeof task === 'string' ? [] : (task.avoid || []);
+
+      const id = taskId(wi, di, ti);
+      const checked = !!progress[id];
+
+      const input = el('input', {
+        type: 'checkbox',
+        checked: checked ? '' : null,
+        onchange: (ev) => {
+          progress[id] = ev.target.checked;
+          if (!ev.target.checked) delete progress[id];
+          saveProgress(progress);
+          renderDailyPage();
+        }
+      });
+
+      const label = el('label', {}, [
+        input,
+        el('div', { class: 't' }, [text])
+      ]);
+
+      const li = el('li', { class: `task ${checked ? 'done' : ''}` }, [label]);
+
+      const hasMore = what.length || decisions.length || doneWhen.length || avoid.length;
+      if (hasMore) {
+        li.appendChild(
+          el('details', { class: 'acc', style: 'margin-top:.45rem' }, [
+            el('summary', {}, [
+              el('div', { class: 'title' }, ['How to do it']),
+              el('div', { class: 'meta' }, ['Console and CLI guidance (no code dump)'])
+            ]),
+            el('div', { class: 'body' }, [
+              what.length ? el('h4', {}, ['What to do']) : null,
+              what.length ? el('ul', {}, what.map((x) => el('li', {}, [x]))) : null,
+              decisions.length ? el('h4', {}, ['Decisions']) : null,
+              decisions.length ? el('ul', {}, decisions.map((x) => el('li', {}, [x]))) : null,
+              doneWhen.length ? el('h4', {}, ['Done when']) : null,
+              doneWhen.length ? el('ul', {}, doneWhen.map((x) => el('li', {}, [x]))) : null,
+              avoid.length ? el('h4', {}, ['Avoid']) : null,
+              avoid.length ? el('ul', {}, avoid.map((x) => el('li', {}, [x]))) : null
+            ])
+          ])
+        );
+      }
+
+      list.appendChild(li);
+    });
+
+    dayBody.innerHTML = '';
+    dayBody.appendChild(list);
+  }
+
+  draw();
+}
+
+function renderRoadmapPage() {
+  if (!$('#treeRoot')) return;
+  renderTree();
+}
+
+const page = document.body?.dataset?.page || '';
+
+$('#resetProgress')?.addEventListener('click', () => {
+  if (!confirm('Reset all progress?')) return;
+  progress = {};
+  saveProgress(progress);
+  if (page === 'daily') renderDailyPage();
+  else {
+    renderTree();
+    renderWeeks();
+  }
+});
+
+if (page === 'daily') {
+  renderDailyPage();
+} else if (page === 'roadmap') {
+  renderRoadmapPage();
+} else {
+  renderChips();
+  renderTree();
+  renderWeeks();
+  renderSkillTree();
+  renderInterviews();
+  renderChecklists();
+}
+
 addAnchoredHeadings();

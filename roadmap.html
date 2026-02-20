@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>NordOps — Daily Questline</title>
+    <title>NordOps — Roadmap Tree</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body data-page="daily">
+  <body data-page="roadmap">
     <a class="skip" href="#main">Skip to content</a>
     <div class="bg"></div>
 
@@ -16,13 +16,13 @@
           <div class="sigil" aria-hidden="true"></div>
           <div>
             <h1>NordOps</h1>
-            <p class="tagline">Daily Questline — pick a day, do the work, tick it off.</p>
+            <p class="tagline">Roadmap Tree — everything you will have done.</p>
           </div>
         </div>
 
         <nav class="nav" aria-label="Site navigation">
-          <a href="./index.html" aria-current="page">Daily</a>
-          <a href="./roadmap.html">Roadmap Tree</a>
+          <a href="./index.html">Daily</a>
+          <a href="./roadmap.html" aria-current="page">Roadmap Tree</a>
         </nav>
       </div>
     </header>
@@ -30,28 +30,17 @@
     <main id="main" class="wrap" tabindex="-1">
       <section class="card">
         <div class="card-head">
-          <h2>Calendar</h2>
-          <div class="controls">
-            <button id="resetProgress" class="btn ghost" type="button">Reset progress</button>
-          </div>
+          <h2>Roadmap Tree</h2>
+          <span class="badge alt">Collapsible · progress-aware</span>
         </div>
         <div class="muted" style="margin:-0.25rem 0 0.75rem">
-          Select a day. Your progress is saved locally.
+          Expand weeks/days to see tasks. Tick tasks on the Daily page — progress shows here too.
         </div>
-
-        <div id="calendar" class="cal" role="region" aria-label="Daily roadmap calendar"></div>
-      </section>
-
-      <section class="card">
-        <div class="card-head">
-          <h2 id="dayTitle">Day</h2>
-          <span id="dayMeta" class="badge alt">4h/day</span>
-        </div>
-        <div id="dayBody"></div>
+        <div id="treeRoot"></div>
       </section>
 
       <footer class="foot">
-        <p class="muted">Want the full map? Open <a href="./roadmap.html">Roadmap Tree</a>.</p>
+        <p class="muted">Tip: use the anchored headings (#) to link people to specific sections.</p>
       </footer>
     </main>
 
