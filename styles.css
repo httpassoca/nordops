@@ -1,0 +1,182 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=IM+Fell+English:ital@0;1&display=swap');
+
+:root{
+  --bg0:#07060a;
+  --bg1:#0c0a10;
+  --panel:rgba(18,14,22,.72);
+  --ink:rgba(40,28,52,.65);
+  --text:#efe7db;
+  --muted:rgba(239,231,219,.72);
+  --gold:#d0a941;
+  --ember:#e0652c;
+  --frost:#a9c7ff;
+  --violet:#7e5bb0;
+  --shadow:rgba(0,0,0,.55);
+  --ring:rgba(208,169,65,.35);
+  --radius:1rem;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  color:var(--text);
+  font-family:'IM Fell English', ui-serif, Georgia, 'Times New Roman', Times, serif;
+  background:linear-gradient(180deg,var(--bg1),var(--bg0));
+  overflow-x:hidden;
+}
+
+.bg{
+  position:fixed;
+  inset:-20vh -20vw;
+  z-index:-1;
+  background:
+    radial-gradient(800px 560px at 10% 12%, color-mix(in oklab, var(--violet) 18%, transparent), transparent 62%),
+    radial-gradient(900px 700px at 85% 18%, color-mix(in oklab, var(--frost) 14%, transparent), transparent 64%),
+    radial-gradient(900px 700px at 50% 120%, color-mix(in oklab, var(--ember) 14%, transparent), transparent 66%),
+    linear-gradient(180deg, color-mix(in oklab, var(--bg1) 95%, black), var(--bg0));
+  filter:saturate(1.05);
+}
+
+.wrap{width:min(1100px, 92vw); margin:0 auto;}
+
+.top{
+  position:sticky;
+  top:0;
+  backdrop-filter: blur(10px);
+  background: color-mix(in oklab, var(--bg1) 70%, transparent);
+  border-bottom:1px solid color-mix(in oklab, var(--ink) 55%, transparent);
+}
+
+.top .wrap{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:1rem;
+  padding:1rem 0;
+}
+
+.brand{display:flex; align-items:center; gap:0.9rem; min-width:0;}
+.sigil{
+  width:3.2rem; height:3.2rem;
+  border-radius:0.9rem;
+  background:
+    radial-gradient(circle at 30% 30%, color-mix(in oklab, var(--gold) 60%, transparent), transparent 55%),
+    radial-gradient(circle at 70% 70%, color-mix(in oklab, var(--ember) 38%, transparent), transparent 62%),
+    linear-gradient(180deg, color-mix(in oklab, var(--panel) 85%, transparent), color-mix(in oklab, var(--ink) 55%, transparent));
+  border:1px solid color-mix(in oklab, var(--ink) 55%, transparent);
+  box-shadow: 0 12px 48px var(--shadow);
+}
+
+h1,h2,h3{
+  font-family:'Cinzel', ui-serif, Georgia, 'Times New Roman', Times, serif;
+  margin:0;
+}
+
+h1{font-size:clamp(1.3rem, 2.2vw, 1.9rem); letter-spacing:.06em;}
+.tagline{margin:.25rem 0 0; color:var(--muted)}
+
+.nav{display:flex; gap:.9rem; flex-wrap:wrap; justify-content:flex-end;}
+.nav a{
+  color: color-mix(in oklab, var(--text) 84%, var(--gold));
+  text-decoration:none;
+  padding:.45rem .65rem;
+  border-radius:.75rem;
+  border:1px solid transparent;
+}
+.nav a:hover{border-color: color-mix(in oklab, var(--ring) 70%, transparent); background: color-mix(in oklab, var(--panel) 65%, transparent);}
+
+main.wrap{padding:1.25rem 0 3rem;}
+
+.card{
+  background: var(--panel);
+  border: 1px solid color-mix(in oklab, var(--ink) 55%, transparent);
+  border-radius: var(--radius);
+  box-shadow: 0 18px 70px var(--shadow);
+  padding: 1.1rem 1.1rem;
+  margin: 1rem 0;
+}
+
+.card-head{display:flex; align-items:flex-start; justify-content:space-between; gap:1rem; flex-wrap:wrap; margin-bottom:.75rem;}
+
+.badge{
+  font-size:.85rem;
+  padding:.35rem .6rem;
+  border-radius:999px;
+  border:1px solid color-mix(in oklab, var(--gold) 45%, var(--ink));
+  background: color-mix(in oklab, var(--panel) 80%, transparent);
+  letter-spacing:.03em;
+}
+.badge.alt{border-color: color-mix(in oklab, var(--frost) 35%, var(--ink));}
+
+.grid{display:grid; gap:1rem;}
+.grid.two{grid-template-columns: 1fr 1fr;}
+
+@media (max-width: 860px){
+  .top .wrap{flex-direction:column; align-items:stretch;}
+  .nav{justify-content:flex-start;}
+  .grid.two{grid-template-columns:1fr;}
+}
+
+ul{margin:.5rem 0 0; padding-left:1.1rem;}
+li{margin:.35rem 0;}
+
+.muted{color:var(--muted)}
+
+.chips{display:flex; flex-wrap:wrap; gap:.5rem; margin-top:.4rem;}
+.chip{
+  font-size:.85rem;
+  padding:.35rem .55rem;
+  border-radius:999px;
+  border:1px solid color-mix(in oklab, var(--ink) 55%, transparent);
+  background: color-mix(in oklab, var(--panel) 75%, transparent);
+}
+
+.controls{display:flex; gap:.6rem;}
+.btn{
+  border:1px solid color-mix(in oklab, var(--gold) 40%, var(--ink));
+  background: color-mix(in oklab, var(--panel) 85%, transparent);
+  color:var(--text);
+  border-radius:.85rem;
+  padding:.45rem .7rem;
+  font-family:'Cinzel', ui-serif, Georgia, 'Times New Roman', Times, serif;
+  letter-spacing:.05em;
+  cursor:pointer;
+}
+.btn.ghost{border-color: color-mix(in oklab, var(--ink) 60%, transparent);}
+.btn:hover{box-shadow: 0 0 0 3px var(--ring);}
+
+.accordion{display:grid; gap:.75rem;}
+.acc{
+  border-radius: .95rem;
+  border:1px solid color-mix(in oklab, var(--ink) 55%, transparent);
+  background: color-mix(in oklab, var(--panel) 70%, transparent);
+  overflow:hidden;
+}
+.acc summary{
+  list-style:none;
+  cursor:pointer;
+  padding:.85rem .9rem;
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:1rem;
+}
+.acc summary::-webkit-details-marker{display:none}
+.acc .title{font-family:'Cinzel'; letter-spacing:.05em;}
+.acc .meta{color:var(--muted); font-size:.9rem; margin-top:.2rem;}
+.acc .body{padding:0 .9rem 1rem;}
+.acc .body h4{margin:.8rem 0 .35rem; font-family:'Cinzel';}
+
+.skilltree{margin:.2rem 0 0; padding-left:1.2rem;}
+.skilltree li{margin:.45rem 0;}
+
+.kbox{
+  border-radius: .95rem;
+  border:1px solid color-mix(in oklab, var(--ink) 55%, transparent);
+  background: color-mix(in oklab, var(--panel) 70%, transparent);
+  padding: .85rem .9rem;
+}
+.kbox h3{margin:0 0 .4rem;}
+
+.foot{padding:.5rem 0 0; text-align:center;}

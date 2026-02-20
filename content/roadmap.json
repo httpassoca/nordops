@@ -1,0 +1,136 @@
+{
+  "keywords": [
+    "AWS", "EKS", "Terraform", "Kubernetes", "Helm", "GitHub Actions", "OIDC", "IAM",
+    "VPC", "ECR", "IRSA", "CloudWatch", "Prometheus", "Grafana", "ALB Ingress", "Route53",
+    "Runbooks", "Incident Response"
+  ],
+  "weeks": [
+    {
+      "title": "Week 1 — The Frostforge: AWS + Terraform Foundations",
+      "goal": "Set up AWS safely and provision baseline infra with Terraform.",
+      "outcomes": [
+        "AWS account hygiene: MFA, budgets/alerts, sane IAM setup",
+        "Terraform remote state (S3 + DynamoDB lock)",
+        "VPC (public/private subnets, routing, NAT — documented tradeoffs)",
+        "EKS cluster + managed node group + basic addons"
+      ],
+      "quests": [
+        "Write docs/architecture.md with an infrastructure diagram",
+        "Write a README: how to create/tear down infra"
+      ]
+    },
+    {
+      "title": "Week 2 — The First Keep: Deploy an App to EKS",
+      "goal": "Deploy a boring app the right way (health checks, configs, ingress).",
+      "outcomes": [
+        "Containerized app (Node API + minimal UI)",
+        "Helm chart with resources, probes, configmaps/secrets",
+        "Ingress via AWS Load Balancer Controller",
+        "Optional TLS + DNS (Route53)"
+      ],
+      "quests": [
+        "Add runbooks/release.md: your release checklist",
+        "Document rollback strategy"
+      ]
+    },
+    {
+      "title": "Week 3 — The Dragonshout: CI/CD that Looks Like Real Work",
+      "goal": "Ship from GitHub to EKS safely, with no long-lived AWS keys.",
+      "outcomes": [
+        "GitHub Actions pipeline (PR checks + main deploy)",
+        "OIDC → AWS role assumption",
+        "Build + scan + push images to ECR",
+        "Deploy via Helm (and optional preview envs per PR)"
+      ],
+      "quests": [
+        "Write docs/cicd.md explaining permissions and flow",
+        "Add Dependabot + basic security scanning"
+      ]
+    },
+    {
+      "title": "Week 4 — The Eye of Magnus: Observability",
+      "goal": "Prove you can operate what you deploy.",
+      "outcomes": [
+        "Metrics (Prometheus) + dashboards (Grafana)",
+        "Basic alerts (crashloop, high restarts, node pressure)",
+        "Logs (CloudWatch or Loki — pick one and document)"
+      ],
+      "quests": [
+        "Write runbooks/alerts.md: what alerts exist and what to do"
+      ]
+    },
+    {
+      "title": "Week 5 — The Ashen Trial: Reliability + Failure Drills",
+      "goal": "Show incident handling and reliability improvements.",
+      "outcomes": [
+        "HPA, PDB, safer rollout strategies",
+        "Chaos drills (kill pods, bad config, overload)",
+        "Postmortem writeup with prevention actions"
+      ],
+      "quests": [
+        "Write runbooks/incident-001.md (postmortem format)",
+        "Add a troubleshooting section to README"
+      ]
+    },
+    {
+      "title": "Week 6 — The Jarl’s Seal: Package for Hiring",
+      "goal": "Turn your work into a narrative recruiters understand in 15 seconds.",
+      "outcomes": [
+        "CV bullets focused on outcomes + systems ownership",
+        "LinkedIn headline + featured project links",
+        "Interview drills (K8s, AWS, Terraform, CI/CD, debugging)"
+      ],
+      "quests": [
+        "Record a 2–3 minute demo video walking through deploy + dashboards",
+        "Create a 1-page ‘battle card’ cheat sheet for interviews"
+      ]
+    }
+  ],
+  "skillTree": [
+    { "name": "Linux + networking basics", "why": "You must debug reality." },
+    { "name": "Docker", "why": "Packaging and reproducibility." },
+    { "name": "Terraform (AWS)", "why": "Infra as code + credibility." },
+    { "name": "Kubernetes (EKS)", "why": "Modern platform baseline." },
+    { "name": "CI/CD (GitHub Actions)", "why": "Shipping safely is the job." },
+    { "name": "Observability", "why": "If you can’t see it, you can’t run it." }
+  ],
+  "interviews": {
+    "Kubernetes": [
+      "Deployments vs StatefulSets",
+      "Services and Ingress (common 502/503 causes)",
+      "Requests/limits, probes, HPA",
+      "Debugging: CrashLoopBackOff, ImagePullBackOff"
+    ],
+    "AWS": [
+      "VPC/subnets/routing/NAT basics",
+      "Security Groups vs NACLs",
+      "IAM roles, policies, least privilege",
+      "EKS fundamentals + ECR"
+    ],
+    "Terraform": [
+      "State, drift, plan/apply",
+      "Modules and env structure",
+      "Remote state + locking"
+    ],
+    "CI/CD": [
+      "OIDC vs long-lived keys",
+      "Rollbacks, safe deploys",
+      "Secret handling + permissions"
+    ]
+  },
+  "checklists": {
+    "Daily (4h/day)": [
+      "30–45m: study + notes (K8s/AWS/Terraform)",
+      "2–2.5h: implement a concrete deliverable",
+      "30m: documentation/runbook",
+      "15m: review/cleanup, commit"
+    ],
+    "Hiring prep": [
+      "Portfolio README has a one-command setup path",
+      "Architecture diagram + runbook exist",
+      "Postmortem exists (even from a simulated incident)",
+      "2–3 minute demo video ready",
+      "CV bullet points map to evidence"
+    ]
+  }
+}
