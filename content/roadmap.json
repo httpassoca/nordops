@@ -1,88 +1,399 @@
 {
   "keywords": [
-    "AWS", "EKS", "Terraform", "Kubernetes", "Helm", "GitHub Actions", "OIDC", "IAM",
-    "VPC", "ECR", "IRSA", "CloudWatch", "Prometheus", "Grafana", "ALB Ingress", "Route53",
-    "Runbooks", "Incident Response"
+    "AWS",
+    "EKS",
+    "Terraform",
+    "Kubernetes",
+    "Helm",
+    "GitHub Actions",
+    "OIDC",
+    "IAM",
+    "VPC",
+    "ECR",
+    "IRSA",
+    "CloudWatch",
+    "Prometheus",
+    "Grafana",
+    "ALB Ingress",
+    "Route53",
+    "Runbooks",
+    "Incident Response"
   ],
   "weeks": [
     {
       "title": "Week 1 — The Frostforge: AWS + Terraform Foundations",
       "goal": "Set up AWS safely and provision baseline infra with Terraform.",
-      "outcomes": [
-        "AWS account hygiene: MFA, budgets/alerts, sane IAM setup",
-        "Terraform remote state (S3 + DynamoDB lock)",
-        "VPC (public/private subnets, routing, NAT — documented tradeoffs)",
-        "EKS cluster + managed node group + basic addons"
-      ],
-      "quests": [
-        "Write docs/architecture.md with an infrastructure diagram",
-        "Write a README: how to create/tear down infra"
+      "dailyTemplate": {
+        "timebox": "4h",
+        "pattern": [
+          "40m learn + notes",
+          "2h build",
+          "40m build",
+          "30m docs/runbook",
+          "10m commit + plan tomorrow"
+        ]
+      },
+      "days": [
+        {
+          "title": "Day 1 — Prepare the Realm (accounts + budget)",
+          "focus": "AWS hygiene + cost safety",
+          "tasks": [
+            "Create/choose a dedicated AWS account for the project",
+            "Enable MFA + set a monthly budget + cost alerts",
+            "Create an admin role/user strategy (write down what you chose and why)",
+            "Install AWS CLI + configure profiles",
+            "Write docs: ‘How I secured this account’"
+          ]
+        },
+        {
+          "title": "Day 2 — Terraform Camp (state + structure)",
+          "focus": "Terraform repo structure + remote state",
+          "tasks": [
+            "Create repo structure: infra/terraform, apps, docs, runbooks",
+            "Configure remote state (S3) + locking (DynamoDB)",
+            "Run terraform fmt/validate and document commands",
+            "Add README: ‘bootstrap infra from scratch’",
+            "Commit baseline and tag a milestone (Week1-Day2)"
+          ]
+        },
+        {
+          "title": "Day 3 — Carve the Roads (VPC)",
+          "focus": "Networking fundamentals",
+          "tasks": [
+            "Provision VPC with public/private subnets across 2 AZs",
+            "Set route tables + internet gateway",
+            "Add NAT (single NAT is fine; document tradeoff)",
+            "Security groups baseline (keep it minimal)",
+            "Write docs/architecture.md (diagram + data flow)"
+          ]
+        },
+        {
+          "title": "Day 4 — Summon the Cluster (EKS)",
+          "focus": "EKS + node groups",
+          "tasks": [
+            "Provision EKS cluster with managed node group",
+            "Install kubectl + verify access",
+            "Install metrics-server",
+            "Install EBS CSI driver",
+            "Write runbooks: ‘cluster access + basic kubectl checks’"
+          ]
+        },
+        {
+          "title": "Day 5 — Make it Repeatable (destroy/recreate)",
+          "focus": "Reproducibility",
+          "tasks": [
+            "Test terraform plan/apply end-to-end",
+            "Test terraform destroy (avoid surprise costs)",
+            "Add troubleshooting notes (common failures + fixes)",
+            "Refactor Terraform into modules if needed (only if it improves clarity)",
+            "End-of-week review: what you learned + what to adjust"
+          ]
+        }
       ]
     },
     {
       "title": "Week 2 — The First Keep: Deploy an App to EKS",
       "goal": "Deploy a boring app the right way (health checks, configs, ingress).",
-      "outcomes": [
-        "Containerized app (Node API + minimal UI)",
-        "Helm chart with resources, probes, configmaps/secrets",
-        "Ingress via AWS Load Balancer Controller",
-        "Optional TLS + DNS (Route53)"
-      ],
-      "quests": [
-        "Add runbooks/release.md: your release checklist",
-        "Document rollback strategy"
+      "days": [
+        {
+          "title": "Day 6 — The Boring App (container + health)",
+          "focus": "App packaging",
+          "tasks": [
+            "Create a small Node API (+ optional tiny UI)",
+            "Add /healthz and /readyz endpoints",
+            "Write Dockerfile (multi-stage if relevant)",
+            "Build and run locally; document commands",
+            "Push code with a clean README section: local run"
+          ]
+        },
+        {
+          "title": "Day 7 — Helm Foundations",
+          "focus": "Deployments done right",
+          "tasks": [
+            "Create a Helm chart for the app",
+            "Set requests/limits + probes",
+            "Config via ConfigMap + Secret (no hardcoding)",
+            "Deploy to cluster and verify rollout",
+            "Write runbooks/deploy.md (how to deploy/rollback)"
+          ]
+        },
+        {
+          "title": "Day 8 — Ingress (ALB) + Routing",
+          "focus": "Networking + ingress",
+          "tasks": [
+            "Install AWS Load Balancer Controller",
+            "Expose app via Ingress",
+            "Verify end-to-end HTTP reachability",
+            "Document common 502/503 causes + how you’d debug",
+            "Commit: ingress working"
+          ]
+        },
+        {
+          "title": "Day 9 — DNS + (Optional) TLS",
+          "focus": "Public entrypoint",
+          "tasks": [
+            "Create Route53 record for your app",
+            "(Optional) Add TLS via ACM or cert-manager",
+            "Document: how to rotate/renew certs",
+            "Add a simple ‘status page’ endpoint",
+            "End-to-day: validate everything from a fresh device"
+          ]
+        },
+        {
+          "title": "Day 10 — Release Checklist",
+          "focus": "Release discipline",
+          "tasks": [
+            "Write runbooks/release.md (step-by-step checklist)",
+            "Write docs for rollback path",
+            "Do a ‘fake release’: change config + deploy",
+            "Document ‘what can go wrong’ + how you detect it",
+            "End-of-week review: gaps to fix next week"
+          ]
+        }
       ]
     },
     {
       "title": "Week 3 — The Dragonshout: CI/CD that Looks Like Real Work",
       "goal": "Ship from GitHub to EKS safely, with no long-lived AWS keys.",
-      "outcomes": [
-        "GitHub Actions pipeline (PR checks + main deploy)",
-        "OIDC → AWS role assumption",
-        "Build + scan + push images to ECR",
-        "Deploy via Helm (and optional preview envs per PR)"
-      ],
-      "quests": [
-        "Write docs/cicd.md explaining permissions and flow",
-        "Add Dependabot + basic security scanning"
+      "days": [
+        {
+          "title": "Day 11 — CI Basics (PR checks)",
+          "focus": "Quality gates",
+          "tasks": [
+            "Add GitHub Actions workflow: lint/test/build on PR",
+            "Cache dependencies where safe",
+            "Add basic security scanning (Trivy or similar)",
+            "Add Dependabot",
+            "Document: what the pipeline checks and why"
+          ]
+        },
+        {
+          "title": "Day 12 — ECR + image publishing",
+          "focus": "Build artifacts",
+          "tasks": [
+            "Provision ECR via Terraform",
+            "Add workflow to build + push image on main",
+            "Tag images with commit SHA",
+            "Document: image naming and retention",
+            "Verify pull from cluster"
+          ]
+        },
+        {
+          "title": "Day 13 — OIDC (no static AWS keys)",
+          "focus": "Security",
+          "tasks": [
+            "Configure GitHub OIDC provider in AWS",
+            "Create least-privilege role for CI",
+            "Update workflow to assume role via OIDC",
+            "Write docs: permissions model",
+            "Audit: ensure no long-lived AWS keys are used"
+          ]
+        },
+        {
+          "title": "Day 14 — CD to Kubernetes",
+          "focus": "Automated deploys",
+          "tasks": [
+            "Deploy to EKS via Helm in CI",
+            "Add rollback strategy (helm rollback) documented",
+            "Add a manual approval step for prod (optional)",
+            "Write docs/cicd.md describing the full flow",
+            "End-to-day: do a real code change and watch it deploy"
+          ]
+        },
+        {
+          "title": "Day 15 — Preview environments (optional but strong)",
+          "focus": "DevEx",
+          "tasks": [
+            "Create per-PR namespace deployments (optional)",
+            "Auto-destroy on PR close",
+            "Document costs + when to use previews",
+            "Add a ‘how to test a PR deployment’ guide",
+            "End-of-week review: keep or drop preview envs"
+          ]
+        }
       ]
     },
     {
       "title": "Week 4 — The Eye of Magnus: Observability",
       "goal": "Prove you can operate what you deploy.",
-      "outcomes": [
-        "Metrics (Prometheus) + dashboards (Grafana)",
-        "Basic alerts (crashloop, high restarts, node pressure)",
-        "Logs (CloudWatch or Loki — pick one and document)"
-      ],
-      "quests": [
-        "Write runbooks/alerts.md: what alerts exist and what to do"
+      "days": [
+        {
+          "title": "Day 16 — Metrics stack",
+          "focus": "Prometheus + Grafana",
+          "tasks": [
+            "Install kube-prometheus-stack",
+            "Expose Grafana safely (port-forward is OK)",
+            "Create a dashboard: pod restarts, CPU/mem, node pressure",
+            "Write runbooks/observability.md",
+            "Commit: metrics online"
+          ]
+        },
+        {
+          "title": "Day 17 — App metrics (basic)",
+          "focus": "Service visibility",
+          "tasks": [
+            "Add basic request metrics to app (optional)",
+            "Dashboards: latency/error rate (even simple)",
+            "Document SLO-ish thinking (what matters)",
+            "Add alert rules for obvious failures",
+            "End-to-day: test alerts (simulate crashloop)"
+          ]
+        },
+        {
+          "title": "Day 18 — Logs",
+          "focus": "Debugging",
+          "tasks": [
+            "Choose logging path (CloudWatch is fine)",
+            "Ensure logs are accessible + searchable",
+            "Write ‘how to debug a 500’ runbook",
+            "Add structured logging (optional)",
+            "Commit: log pipeline documented"
+          ]
+        },
+        {
+          "title": "Day 19 — Alert playbooks",
+          "focus": "Operational readiness",
+          "tasks": [
+            "Write runbooks/alerts.md for each alert",
+            "Add ‘first 5 minutes’ checklist",
+            "Add ‘rollback now’ decision criteria",
+            "Test: break one thing and follow your playbook",
+            "Refine docs based on what was missing"
+          ]
+        },
+        {
+          "title": "Day 20 — Harden and document",
+          "focus": "Polish",
+          "tasks": [
+            "Review permissions (least privilege)",
+            "Review resource limits and autoscaling defaults",
+            "Consolidate docs into a clean table of contents",
+            "Add screenshots (dashboards) to docs",
+            "End-of-week review: where are you still shaky?"
+          ]
+        }
       ]
     },
     {
       "title": "Week 5 — The Ashen Trial: Reliability + Failure Drills",
       "goal": "Show incident handling and reliability improvements.",
-      "outcomes": [
-        "HPA, PDB, safer rollout strategies",
-        "Chaos drills (kill pods, bad config, overload)",
-        "Postmortem writeup with prevention actions"
-      ],
-      "quests": [
-        "Write runbooks/incident-001.md (postmortem format)",
-        "Add a troubleshooting section to README"
+      "days": [
+        {
+          "title": "Day 21 — Reliability basics",
+          "focus": "Safe operations",
+          "tasks": [
+            "Add HPA (CPU-based) and validate behavior",
+            "Add PodDisruptionBudget",
+            "Tune rollout strategy for safe deploys",
+            "Document: scaling and what triggers it",
+            "Commit: reliability controls in place"
+          ]
+        },
+        {
+          "title": "Day 22 — Chaos drill #1 (pods)",
+          "focus": "Failure handling",
+          "tasks": [
+            "Kill pods / delete deployment and observe recovery",
+            "Check dashboards + logs during failure",
+            "Write postmortem: what happened, detection, fix",
+            "Add a prevention action (if any)",
+            "Commit postmortem and improvements"
+          ]
+        },
+        {
+          "title": "Day 23 — Chaos drill #2 (bad config)",
+          "focus": "Release safety",
+          "tasks": [
+            "Deploy a bad config and see impact",
+            "Rollback using your documented procedure",
+            "Write postmortem (incident-002)",
+            "Add guardrails in CI (if possible)",
+            "Commit"
+          ]
+        },
+        {
+          "title": "Day 24 — Troubleshooting guide",
+          "focus": "Supportability",
+          "tasks": [
+            "Write a troubleshooting section in README",
+            "Include: CrashLoopBackOff, ImagePullBackOff, 502/503",
+            "Add quick kubectl commands cheat sheet",
+            "Ensure docs are beginner-friendly (future-you)",
+            "Commit"
+          ]
+        },
+        {
+          "title": "Day 25 — End-to-end demo run",
+          "focus": "Proof",
+          "tasks": [
+            "Do a clean deploy from scratch (infra → app)",
+            "Record a 2–3 minute demo (screen capture)",
+            "Validate: CI deploys, dashboards, rollback",
+            "Write ‘demo script’ notes",
+            "End-of-week review: list remaining gaps"
+          ]
+        }
       ]
     },
     {
       "title": "Week 6 — The Jarl’s Seal: Package for Hiring",
       "goal": "Turn your work into a narrative recruiters understand in 15 seconds.",
-      "outcomes": [
-        "CV bullets focused on outcomes + systems ownership",
-        "LinkedIn headline + featured project links",
-        "Interview drills (K8s, AWS, Terraform, CI/CD, debugging)"
-      ],
-      "quests": [
-        "Record a 2–3 minute demo video walking through deploy + dashboards",
-        "Create a 1-page ‘battle card’ cheat sheet for interviews"
+      "days": [
+        {
+          "title": "Day 26 — CV bullets (evidence-based)",
+          "focus": "Positioning",
+          "tasks": [
+            "Write CV bullets mapping to your project evidence",
+            "Add keyword coverage (EKS, Terraform, OIDC, Helm)",
+            "Create a 1-page summary in docs/for-hiring.md",
+            "Sanity-check: no fluff, only proof",
+            "Commit"
+          ]
+        },
+        {
+          "title": "Day 27 — LinkedIn + repo polish",
+          "focus": "Discoverability",
+          "tasks": [
+            "Update LinkedIn headline + about section",
+            "Pin/feature the repo and demo video",
+            "Clean README with sections + screenshots",
+            "Add badges for CI",
+            "Commit"
+          ]
+        },
+        {
+          "title": "Day 28 — Interview drills: Kubernetes",
+          "focus": "Combat practice",
+          "tasks": [
+            "Practice explaining Deployments/Services/Ingress",
+            "Debug drill: CrashLoopBackOff scenario",
+            "Explain resources/probes/HPA",
+            "Write flashcards / battle card",
+            "1 mock interview (self-record)"
+          ]
+        },
+        {
+          "title": "Day 29 — Interview drills: AWS + Terraform",
+          "focus": "Combat practice",
+          "tasks": [
+            "Explain VPC/subnets/NAT/Security Groups",
+            "Explain IAM least privilege + OIDC",
+            "Explain Terraform state/drift/modules",
+            "Debug drill: networking reachability",
+            "Update battle card"
+          ]
+        },
+        {
+          "title": "Day 30 — Apply loop",
+          "focus": "Execution",
+          "tasks": [
+            "Create a target company list (20–30)",
+            "Apply to 5 roles/day for 1 week",
+            "Track applications and outcomes",
+            "Refine CV based on rejections",
+            "Schedule 2 mock interviews with a friend or online"
+          ]
+        }
       ]
     }
   ],
@@ -120,15 +431,16 @@
   },
   "checklists": {
     "Daily (4h/day)": [
-      "30–45m: study + notes (K8s/AWS/Terraform)",
-      "2–2.5h: implement a concrete deliverable",
-      "30m: documentation/runbook",
-      "15m: review/cleanup, commit"
+      "40m: learn + notes (K8s/AWS/Terraform)",
+      "2h: build (hands-on)",
+      "40m: build (finish deliverable)",
+      "30m: docs/runbook",
+      "10m: commit + plan tomorrow"
     ],
     "Hiring prep": [
-      "Portfolio README has a one-command setup path",
-      "Architecture diagram + runbook exist",
-      "Postmortem exists (even from a simulated incident)",
+      "README has a clear start-to-finish path",
+      "Architecture diagram + runbooks exist",
+      "At least 1 postmortem exists (even simulated)",
       "2–3 minute demo video ready",
       "CV bullet points map to evidence"
     ]

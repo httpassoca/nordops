@@ -21,7 +21,7 @@
 
         <nav class="nav">
           <a href="#overview">Overview</a>
-          <a href="#weeks">The 6-Week Questline</a>
+          <a href="#weeks">Daily Questline</a>
           <a href="#skills">Skill Tree</a>
           <a href="#interviews">Trials (Interviews)</a>
           <a href="#checklists">Checklists</a>
@@ -56,11 +56,15 @@
 
       <section id="weeks" class="card">
         <div class="card-head">
-          <h2>The 6-Week Questline</h2>
+          <h2>Daily Questline (6 weeks · 4h/day)</h2>
           <div class="controls">
             <button id="expandAll" class="btn" type="button">Expand all</button>
             <button id="collapseAll" class="btn ghost" type="button">Collapse all</button>
+            <button id="resetProgress" class="btn ghost" type="button">Reset progress</button>
           </div>
+        </div>
+        <div class="muted" style="margin:-0.25rem 0 0.75rem">
+          Each day has a concrete checklist. Tick items as you complete them — progress is saved in your browser.
         </div>
         <div id="weeksList" class="accordion"></div>
       </section>

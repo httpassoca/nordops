@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=IM+Fell+English:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@400;600;800&display=swap');
 
 :root{
   --bg0:#07060a;
@@ -21,7 +21,7 @@ html,body{height:100%}
 body{
   margin:0;
   color:var(--text);
-  font-family:'IM Fell English', ui-serif, Georgia, 'Times New Roman', Times, serif;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
   background:linear-gradient(180deg,var(--bg1),var(--bg0));
   overflow-x:hidden;
 }
@@ -163,10 +163,10 @@ li{margin:.35rem 0;}
   gap:1rem;
 }
 .acc summary::-webkit-details-marker{display:none}
-.acc .title{font-family:'Cinzel'; letter-spacing:.05em;}
+.acc .title{font-family:'Cinzel', ui-serif, Georgia, 'Times New Roman', Times, serif; letter-spacing:.05em;}
 .acc .meta{color:var(--muted); font-size:.9rem; margin-top:.2rem;}
 .acc .body{padding:0 .9rem 1rem;}
-.acc .body h4{margin:.8rem 0 .35rem; font-family:'Cinzel';}
+.acc .body h4{margin:.8rem 0 .35rem; font-family:'Cinzel', ui-serif, Georgia, 'Times New Roman', Times, serif;}
 
 .skilltree{margin:.2rem 0 0; padding-left:1.2rem;}
 .skilltree li{margin:.45rem 0;}
@@ -178,5 +178,49 @@ li{margin:.35rem 0;}
   padding: .85rem .9rem;
 }
 .kbox h3{margin:0 0 .4rem;}
+
+/* checkbox tasks */
+.tasklist{margin:.5rem 0 0; padding:0; list-style:none; display:grid; gap:.5rem;}
+.task{
+  display:flex;
+  gap:.65rem;
+  align-items:flex-start;
+  padding:.55rem .6rem;
+  border-radius:.8rem;
+  border:1px solid color-mix(in oklab, var(--ink) 50%, transparent);
+  background: color-mix(in oklab, var(--panel) 72%, transparent);
+}
+.task:hover{box-shadow:0 0 0 3px color-mix(in oklab, var(--ring) 55%, transparent)}
+.task input{margin-top:.25rem; width:1.05rem; height:1.05rem; accent-color: var(--gold);}
+.task .t{
+  line-height:1.35;
+}
+.task.done{
+  opacity:.75;
+}
+.task.done .t{
+  text-decoration: line-through;
+  text-decoration-color: color-mix(in oklab, var(--gold) 55%, transparent);
+}
+
+.day-head{display:flex; align-items:baseline; justify-content:space-between; gap:.8rem; flex-wrap:wrap; margin-top:.2rem;}
+.day-meta{color:var(--muted); font-size:.92rem}
+
+.progress{
+  display:flex;
+  gap:.55rem;
+  align-items:center;
+  color:var(--muted);
+  font-size:.92rem;
+}
+.bar{
+  width: 10rem;
+  height: .55rem;
+  border-radius: 999px;
+  border:1px solid color-mix(in oklab, var(--ink) 55%, transparent);
+  background: color-mix(in oklab, var(--panel) 75%, transparent);
+  overflow:hidden;
+}
+.bar > i{display:block; height:100%; width:0%; background: linear-gradient(90deg, var(--gold), color-mix(in oklab, var(--ember) 75%, var(--gold)));}
 
 .foot{padding:.5rem 0 0; text-align:center;}
