@@ -38,55 +38,312 @@
           "title": "Day 1 — Prepare the Realm (accounts + budget)",
           "focus": "AWS hygiene + cost safety",
           "tasks": [
-            "Create/choose a dedicated AWS account for the project",
-            "Enable MFA + set a monthly budget + cost alerts",
-            "Create an admin role/user strategy (write down what you chose and why)",
-            "Install AWS CLI + configure profiles",
-            "Write docs: ‘How I secured this account’"
+            {
+              "text": "Create/choose a dedicated AWS account for the project",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            },
+            {
+              "text": "Enable MFA + set a monthly budget + cost alerts",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            },
+            {
+              "text": "Create an admin role/user strategy (write down what you chose and why)",
+              "instructions": [
+                "Write it as if future-you is sleep-deprived and debugging.",
+                "Add copy-pastable commands."
+              ],
+              "recommendations": [
+                "Include “expected output” for key commands when possible."
+              ]
+            },
+            {
+              "text": "Install AWS CLI + configure profiles",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            },
+            {
+              "text": "Write docs: ‘How I secured this account’",
+              "instructions": [
+                "Write it as if future-you is sleep-deprived and debugging.",
+                "Add copy-pastable commands."
+              ],
+              "recommendations": [
+                "Include “expected output” for key commands when possible."
+              ]
+            }
           ]
         },
         {
           "title": "Day 2 — Terraform Camp (state + structure)",
           "focus": "Terraform repo structure + remote state",
           "tasks": [
-            "Create repo structure: infra/terraform, apps, docs, runbooks",
-            "Configure remote state (S3) + locking (DynamoDB)",
-            "Run terraform fmt/validate and document commands",
-            "Add README: ‘bootstrap infra from scratch’",
-            "Commit baseline and tag a milestone (Week1-Day2)"
+            {
+              "text": "Create repo structure: infra/terraform, apps, docs, runbooks",
+              "instructions": [
+                "Create/adjust Terraform code for this change.",
+                "Run: terraform fmt && terraform validate.",
+                "Run: terraform plan and read the diff before applying.",
+                "Write it as if future-you is sleep-deprived and debugging.",
+                "Add copy-pastable commands."
+              ],
+              "recommendations": [
+                "Prefer small, reviewable commits.",
+                "Keep state remote and locked (S3 + DynamoDB).",
+                "Include “expected output” for key commands when possible."
+              ]
+            },
+            {
+              "text": "Configure remote state (S3) + locking (DynamoDB)",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            },
+            {
+              "text": "Run terraform fmt/validate and document commands",
+              "instructions": [
+                "Create/adjust Terraform code for this change.",
+                "Run: terraform fmt && terraform validate.",
+                "Run: terraform plan and read the diff before applying.",
+                "Write it as if future-you is sleep-deprived and debugging.",
+                "Add copy-pastable commands."
+              ],
+              "recommendations": [
+                "Prefer small, reviewable commits.",
+                "Keep state remote and locked (S3 + DynamoDB).",
+                "Include “expected output” for key commands when possible."
+              ]
+            },
+            {
+              "text": "Add README: ‘bootstrap infra from scratch’",
+              "instructions": [
+                "Write it as if future-you is sleep-deprived and debugging.",
+                "Add copy-pastable commands."
+              ],
+              "recommendations": [
+                "Include “expected output” for key commands when possible."
+              ]
+            },
+            {
+              "text": "Commit baseline and tag a milestone (Week1-Day2)",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            }
           ]
         },
         {
           "title": "Day 3 — Carve the Roads (VPC)",
           "focus": "Networking fundamentals",
           "tasks": [
-            "Provision VPC with public/private subnets across 2 AZs",
-            "Set route tables + internet gateway",
-            "Add NAT (single NAT is fine; document tradeoff)",
-            "Security groups baseline (keep it minimal)",
-            "Write docs/architecture.md (diagram + data flow)"
+            {
+              "text": "Provision VPC with public/private subnets across 2 AZs",
+              "instructions": [
+                "Draw the network flow: client → ALB → nodes → pods.",
+                "Verify routes and security groups allow the traffic you expect."
+              ],
+              "recommendations": [
+                "Document tradeoffs (1 NAT vs 2 NATs)."
+              ]
+            },
+            {
+              "text": "Set route tables + internet gateway",
+              "instructions": [
+                "Draw the network flow: client → ALB → nodes → pods.",
+                "Verify routes and security groups allow the traffic you expect."
+              ],
+              "recommendations": [
+                "Document tradeoffs (1 NAT vs 2 NATs)."
+              ]
+            },
+            {
+              "text": "Add NAT (single NAT is fine; document tradeoff)",
+              "instructions": [
+                "Draw the network flow: client → ALB → nodes → pods.",
+                "Verify routes and security groups allow the traffic you expect.",
+                "Write it as if future-you is sleep-deprived and debugging.",
+                "Add copy-pastable commands."
+              ],
+              "recommendations": [
+                "Document tradeoffs (1 NAT vs 2 NATs).",
+                "Include “expected output” for key commands when possible."
+              ]
+            },
+            {
+              "text": "Security groups baseline (keep it minimal)",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            },
+            {
+              "text": "Write docs/architecture.md (diagram + data flow)",
+              "instructions": [
+                "Write it as if future-you is sleep-deprived and debugging.",
+                "Add copy-pastable commands."
+              ],
+              "recommendations": [
+                "Include “expected output” for key commands when possible."
+              ]
+            }
           ]
         },
         {
           "title": "Day 4 — Summon the Cluster (EKS)",
           "focus": "EKS + node groups",
           "tasks": [
-            "Provision EKS cluster with managed node group",
-            "Install kubectl + verify access",
-            "Install metrics-server",
-            "Install EBS CSI driver",
-            "Write runbooks: ‘cluster access + basic kubectl checks’"
+            {
+              "text": "Provision EKS cluster with managed node group",
+              "instructions": [
+                "After changes, verify: kubectl get nodes,pods -A",
+                "Confirm addons are healthy (metrics-server, CSI drivers)."
+              ],
+              "recommendations": [
+                "Write a quick runbook: how to regain access if kubeconfig breaks."
+              ]
+            },
+            {
+              "text": "Install kubectl + verify access",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            },
+            {
+              "text": "Install metrics-server",
+              "instructions": [
+                "Create at least one dashboard that answers: “is the service healthy?”",
+                "Add 1–2 alerts and test they fire."
+              ],
+              "recommendations": [
+                "Prefer actionable alerts; avoid noisy ones."
+              ]
+            },
+            {
+              "text": "Install EBS CSI driver",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            },
+            {
+              "text": "Write runbooks: ‘cluster access + basic kubectl checks’",
+              "instructions": [
+                "After changes, verify: kubectl get nodes,pods -A",
+                "Confirm addons are healthy (metrics-server, CSI drivers).",
+                "Write it as if future-you is sleep-deprived and debugging.",
+                "Add copy-pastable commands."
+              ],
+              "recommendations": [
+                "Write a quick runbook: how to regain access if kubeconfig breaks.",
+                "Include “expected output” for key commands when possible."
+              ]
+            }
           ]
         },
         {
           "title": "Day 5 — Make it Repeatable (destroy/recreate)",
           "focus": "Reproducibility",
           "tasks": [
-            "Test terraform plan/apply end-to-end",
-            "Test terraform destroy (avoid surprise costs)",
-            "Add troubleshooting notes (common failures + fixes)",
-            "Refactor Terraform into modules if needed (only if it improves clarity)",
-            "End-of-week review: what you learned + what to adjust"
+            {
+              "text": "Test terraform plan/apply end-to-end",
+              "instructions": [
+                "Create/adjust Terraform code for this change.",
+                "Run: terraform fmt && terraform validate.",
+                "Run: terraform plan and read the diff before applying."
+              ],
+              "recommendations": [
+                "Prefer small, reviewable commits.",
+                "Keep state remote and locked (S3 + DynamoDB)."
+              ]
+            },
+            {
+              "text": "Test terraform destroy (avoid surprise costs)",
+              "instructions": [
+                "Create/adjust Terraform code for this change.",
+                "Run: terraform fmt && terraform validate.",
+                "Run: terraform plan and read the diff before applying."
+              ],
+              "recommendations": [
+                "Prefer small, reviewable commits.",
+                "Keep state remote and locked (S3 + DynamoDB)."
+              ]
+            },
+            {
+              "text": "Add troubleshooting notes (common failures + fixes)",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            },
+            {
+              "text": "Refactor Terraform into modules if needed (only if it improves clarity)",
+              "instructions": [
+                "Create/adjust Terraform code for this change.",
+                "Run: terraform fmt && terraform validate.",
+                "Run: terraform plan and read the diff before applying."
+              ],
+              "recommendations": [
+                "Prefer small, reviewable commits.",
+                "Keep state remote and locked (S3 + DynamoDB)."
+              ]
+            },
+            {
+              "text": "End-of-week review: what you learned + what to adjust",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            }
           ]
         }
       ]
@@ -99,55 +356,295 @@
           "title": "Day 6 — The Boring App (container + health)",
           "focus": "App packaging",
           "tasks": [
-            "Create a small Node API (+ optional tiny UI)",
-            "Add /healthz and /readyz endpoints",
-            "Write Dockerfile (multi-stage if relevant)",
-            "Build and run locally; document commands",
-            "Push code with a clean README section: local run"
+            {
+              "text": "Create a small Node API (+ optional tiny UI)",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            },
+            {
+              "text": "Add /healthz and /readyz endpoints",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            },
+            {
+              "text": "Write Dockerfile (multi-stage if relevant)",
+              "instructions": [
+                "Build locally once, then automate in CI.",
+                "Tag images with commit SHA and keep latest optional.",
+                "Write it as if future-you is sleep-deprived and debugging.",
+                "Add copy-pastable commands."
+              ],
+              "recommendations": [
+                "Keep images small (multi-stage builds) when possible.",
+                "Include “expected output” for key commands when possible."
+              ]
+            },
+            {
+              "text": "Build and run locally; document commands",
+              "instructions": [
+                "Write it as if future-you is sleep-deprived and debugging.",
+                "Add copy-pastable commands."
+              ],
+              "recommendations": [
+                "Include “expected output” for key commands when possible."
+              ]
+            },
+            {
+              "text": "Push code with a clean README section: local run",
+              "instructions": [
+                "Write it as if future-you is sleep-deprived and debugging.",
+                "Add copy-pastable commands."
+              ],
+              "recommendations": [
+                "Include “expected output” for key commands when possible."
+              ]
+            }
           ]
         },
         {
           "title": "Day 7 — Helm Foundations",
           "focus": "Deployments done right",
           "tasks": [
-            "Create a Helm chart for the app",
-            "Set requests/limits + probes",
-            "Config via ConfigMap + Secret (no hardcoding)",
-            "Deploy to cluster and verify rollout",
-            "Write runbooks/deploy.md (how to deploy/rollback)"
+            {
+              "text": "Create a Helm chart for the app",
+              "instructions": [
+                "Add values.yaml defaults and document required values.",
+                "Use probes + requests/limits in the chart."
+              ],
+              "recommendations": [
+                "Keep templates simple; avoid clever logic."
+              ]
+            },
+            {
+              "text": "Set requests/limits + probes",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            },
+            {
+              "text": "Config via ConfigMap + Secret (no hardcoding)",
+              "instructions": [
+                "Build locally once, then automate in CI.",
+                "Tag images with commit SHA and keep latest optional."
+              ],
+              "recommendations": [
+                "Keep images small (multi-stage builds) when possible."
+              ]
+            },
+            {
+              "text": "Deploy to cluster and verify rollout",
+              "instructions": [
+                "After changes, verify: kubectl get nodes,pods -A",
+                "Confirm addons are healthy (metrics-server, CSI drivers)."
+              ],
+              "recommendations": [
+                "Write a quick runbook: how to regain access if kubeconfig breaks."
+              ]
+            },
+            {
+              "text": "Write runbooks/deploy.md (how to deploy/rollback)",
+              "instructions": [
+                "Write it as if future-you is sleep-deprived and debugging.",
+                "Add copy-pastable commands."
+              ],
+              "recommendations": [
+                "Include “expected output” for key commands when possible."
+              ]
+            }
           ]
         },
         {
           "title": "Day 8 — Ingress (ALB) + Routing",
           "focus": "Networking + ingress",
           "tasks": [
-            "Install AWS Load Balancer Controller",
-            "Expose app via Ingress",
-            "Verify end-to-end HTTP reachability",
-            "Document common 502/503 causes + how you’d debug",
-            "Commit: ingress working"
+            {
+              "text": "Install AWS Load Balancer Controller",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            },
+            {
+              "text": "Expose app via Ingress",
+              "instructions": [
+                "Verify the ALB target group health checks match your readiness endpoint.",
+                "Debug with: kubectl describe ingress + controller logs."
+              ],
+              "recommendations": [
+                "Write down the 3 most common 502/503 causes and how to detect each."
+              ]
+            },
+            {
+              "text": "Verify end-to-end HTTP reachability",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            },
+            {
+              "text": "Document common 502/503 causes + how you’d debug",
+              "instructions": [
+                "Write it as if future-you is sleep-deprived and debugging.",
+                "Add copy-pastable commands."
+              ],
+              "recommendations": [
+                "Include “expected output” for key commands when possible."
+              ]
+            },
+            {
+              "text": "Commit: ingress working",
+              "instructions": [
+                "Verify the ALB target group health checks match your readiness endpoint.",
+                "Debug with: kubectl describe ingress + controller logs."
+              ],
+              "recommendations": [
+                "Write down the 3 most common 502/503 causes and how to detect each."
+              ]
+            }
           ]
         },
         {
           "title": "Day 9 — DNS + (Optional) TLS",
           "focus": "Public entrypoint",
           "tasks": [
-            "Create Route53 record for your app",
-            "(Optional) Add TLS via ACM or cert-manager",
-            "Document: how to rotate/renew certs",
-            "Add a simple ‘status page’ endpoint",
-            "End-to-day: validate everything from a fresh device"
+            {
+              "text": "Create Route53 record for your app",
+              "instructions": [
+                "Draw the network flow: client → ALB → nodes → pods.",
+                "Verify routes and security groups allow the traffic you expect.",
+                "Confirm record points to the right ALB and propagation is complete."
+              ],
+              "recommendations": [
+                "Document tradeoffs (1 NAT vs 2 NATs).",
+                "Keep TTL low while iterating, then raise it later."
+              ]
+            },
+            {
+              "text": "(Optional) Add TLS via ACM or cert-manager",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            },
+            {
+              "text": "Document: how to rotate/renew certs",
+              "instructions": [
+                "Write it as if future-you is sleep-deprived and debugging.",
+                "Add copy-pastable commands."
+              ],
+              "recommendations": [
+                "Include “expected output” for key commands when possible."
+              ]
+            },
+            {
+              "text": "Add a simple ‘status page’ endpoint",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            },
+            {
+              "text": "End-to-day: validate everything from a fresh device",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            }
           ]
         },
         {
           "title": "Day 10 — Release Checklist",
           "focus": "Release discipline",
           "tasks": [
-            "Write runbooks/release.md (step-by-step checklist)",
-            "Write docs for rollback path",
-            "Do a ‘fake release’: change config + deploy",
-            "Document ‘what can go wrong’ + how you detect it",
-            "End-of-week review: gaps to fix next week"
+            {
+              "text": "Write runbooks/release.md (step-by-step checklist)",
+              "instructions": [
+                "Write it as if future-you is sleep-deprived and debugging.",
+                "Add copy-pastable commands."
+              ],
+              "recommendations": [
+                "Include “expected output” for key commands when possible."
+              ]
+            },
+            {
+              "text": "Write docs for rollback path",
+              "instructions": [
+                "Write it as if future-you is sleep-deprived and debugging.",
+                "Add copy-pastable commands."
+              ],
+              "recommendations": [
+                "Include “expected output” for key commands when possible."
+              ]
+            },
+            {
+              "text": "Do a ‘fake release’: change config + deploy",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            },
+            {
+              "text": "Document ‘what can go wrong’ + how you detect it",
+              "instructions": [
+                "Write it as if future-you is sleep-deprived and debugging.",
+                "Add copy-pastable commands."
+              ],
+              "recommendations": [
+                "Include “expected output” for key commands when possible."
+              ]
+            },
+            {
+              "text": "End-of-week review: gaps to fix next week",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            }
           ]
         }
       ]
@@ -160,55 +657,311 @@
           "title": "Day 11 — CI Basics (PR checks)",
           "focus": "Quality gates",
           "tasks": [
-            "Add GitHub Actions workflow: lint/test/build on PR",
-            "Cache dependencies where safe",
-            "Add basic security scanning (Trivy or similar)",
-            "Add Dependabot",
-            "Document: what the pipeline checks and why"
+            {
+              "text": "Add GitHub Actions workflow: lint/test/build on PR",
+              "instructions": [
+                "Run the workflow on a PR and confirm it blocks bad changes.",
+                "Keep secrets out of the repo; prefer OIDC."
+              ],
+              "recommendations": [
+                "Fail fast: lint/test/build before deploy steps."
+              ]
+            },
+            {
+              "text": "Cache dependencies where safe",
+              "instructions": [
+                "Run the workflow on a PR and confirm it blocks bad changes.",
+                "Keep secrets out of the repo; prefer OIDC."
+              ],
+              "recommendations": [
+                "Fail fast: lint/test/build before deploy steps."
+              ]
+            },
+            {
+              "text": "Add basic security scanning (Trivy or similar)",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            },
+            {
+              "text": "Add Dependabot",
+              "instructions": [
+                "Run the workflow on a PR and confirm it blocks bad changes.",
+                "Keep secrets out of the repo; prefer OIDC."
+              ],
+              "recommendations": [
+                "Fail fast: lint/test/build before deploy steps."
+              ]
+            },
+            {
+              "text": "Document: what the pipeline checks and why",
+              "instructions": [
+                "Write it as if future-you is sleep-deprived and debugging.",
+                "Add copy-pastable commands."
+              ],
+              "recommendations": [
+                "Include “expected output” for key commands when possible."
+              ]
+            }
           ]
         },
         {
           "title": "Day 12 — ECR + image publishing",
           "focus": "Build artifacts",
           "tasks": [
-            "Provision ECR via Terraform",
-            "Add workflow to build + push image on main",
-            "Tag images with commit SHA",
-            "Document: image naming and retention",
-            "Verify pull from cluster"
+            {
+              "text": "Provision ECR via Terraform",
+              "instructions": [
+                "Create/adjust Terraform code for this change.",
+                "Run: terraform fmt && terraform validate.",
+                "Run: terraform plan and read the diff before applying.",
+                "Build locally once, then automate in CI.",
+                "Tag images with commit SHA and keep latest optional."
+              ],
+              "recommendations": [
+                "Prefer small, reviewable commits.",
+                "Keep state remote and locked (S3 + DynamoDB).",
+                "Keep images small (multi-stage builds) when possible."
+              ]
+            },
+            {
+              "text": "Add workflow to build + push image on main",
+              "instructions": [
+                "Run the workflow on a PR and confirm it blocks bad changes.",
+                "Keep secrets out of the repo; prefer OIDC.",
+                "Build locally once, then automate in CI.",
+                "Tag images with commit SHA and keep latest optional."
+              ],
+              "recommendations": [
+                "Fail fast: lint/test/build before deploy steps.",
+                "Keep images small (multi-stage builds) when possible."
+              ]
+            },
+            {
+              "text": "Tag images with commit SHA",
+              "instructions": [
+                "Build locally once, then automate in CI.",
+                "Tag images with commit SHA and keep latest optional."
+              ],
+              "recommendations": [
+                "Keep images small (multi-stage builds) when possible."
+              ]
+            },
+            {
+              "text": "Document: image naming and retention",
+              "instructions": [
+                "Build locally once, then automate in CI.",
+                "Tag images with commit SHA and keep latest optional.",
+                "Write it as if future-you is sleep-deprived and debugging.",
+                "Add copy-pastable commands."
+              ],
+              "recommendations": [
+                "Keep images small (multi-stage builds) when possible.",
+                "Include “expected output” for key commands when possible."
+              ]
+            },
+            {
+              "text": "Verify pull from cluster",
+              "instructions": [
+                "After changes, verify: kubectl get nodes,pods -A",
+                "Confirm addons are healthy (metrics-server, CSI drivers)."
+              ],
+              "recommendations": [
+                "Write a quick runbook: how to regain access if kubeconfig breaks."
+              ]
+            }
           ]
         },
         {
           "title": "Day 13 — OIDC (no static AWS keys)",
           "focus": "Security",
           "tasks": [
-            "Configure GitHub OIDC provider in AWS",
-            "Create least-privilege role for CI",
-            "Update workflow to assume role via OIDC",
-            "Write docs: permissions model",
-            "Audit: ensure no long-lived AWS keys are used"
+            {
+              "text": "Configure GitHub OIDC provider in AWS",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            },
+            {
+              "text": "Create least-privilege role for CI",
+              "instructions": [
+                "Run the workflow on a PR and confirm it blocks bad changes.",
+                "Keep secrets out of the repo; prefer OIDC."
+              ],
+              "recommendations": [
+                "Fail fast: lint/test/build before deploy steps."
+              ]
+            },
+            {
+              "text": "Update workflow to assume role via OIDC",
+              "instructions": [
+                "Run the workflow on a PR and confirm it blocks bad changes.",
+                "Keep secrets out of the repo; prefer OIDC."
+              ],
+              "recommendations": [
+                "Fail fast: lint/test/build before deploy steps."
+              ]
+            },
+            {
+              "text": "Write docs: permissions model",
+              "instructions": [
+                "Write it as if future-you is sleep-deprived and debugging.",
+                "Add copy-pastable commands."
+              ],
+              "recommendations": [
+                "Include “expected output” for key commands when possible."
+              ]
+            },
+            {
+              "text": "Audit: ensure no long-lived AWS keys are used",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            }
           ]
         },
         {
           "title": "Day 14 — CD to Kubernetes",
           "focus": "Automated deploys",
           "tasks": [
-            "Deploy to EKS via Helm in CI",
-            "Add rollback strategy (helm rollback) documented",
-            "Add a manual approval step for prod (optional)",
-            "Write docs/cicd.md describing the full flow",
-            "End-to-day: do a real code change and watch it deploy"
+            {
+              "text": "Deploy to EKS via Helm in CI",
+              "instructions": [
+                "After changes, verify: kubectl get nodes,pods -A",
+                "Confirm addons are healthy (metrics-server, CSI drivers).",
+                "Run the workflow on a PR and confirm it blocks bad changes.",
+                "Keep secrets out of the repo; prefer OIDC.",
+                "Add values.yaml defaults and document required values."
+              ],
+              "recommendations": [
+                "Write a quick runbook: how to regain access if kubeconfig breaks.",
+                "Fail fast: lint/test/build before deploy steps.",
+                "Keep templates simple; avoid clever logic."
+              ]
+            },
+            {
+              "text": "Add rollback strategy (helm rollback) documented",
+              "instructions": [
+                "Add values.yaml defaults and document required values.",
+                "Use probes + requests/limits in the chart.",
+                "Write it as if future-you is sleep-deprived and debugging.",
+                "Add copy-pastable commands."
+              ],
+              "recommendations": [
+                "Keep templates simple; avoid clever logic.",
+                "Include “expected output” for key commands when possible."
+              ]
+            },
+            {
+              "text": "Add a manual approval step for prod (optional)",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            },
+            {
+              "text": "Write docs/cicd.md describing the full flow",
+              "instructions": [
+                "Run the workflow on a PR and confirm it blocks bad changes.",
+                "Keep secrets out of the repo; prefer OIDC.",
+                "Write it as if future-you is sleep-deprived and debugging.",
+                "Add copy-pastable commands."
+              ],
+              "recommendations": [
+                "Fail fast: lint/test/build before deploy steps.",
+                "Include “expected output” for key commands when possible."
+              ]
+            },
+            {
+              "text": "End-to-day: do a real code change and watch it deploy",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            }
           ]
         },
         {
           "title": "Day 15 — Preview environments (optional but strong)",
           "focus": "DevEx",
           "tasks": [
-            "Create per-PR namespace deployments (optional)",
-            "Auto-destroy on PR close",
-            "Document costs + when to use previews",
-            "Add a ‘how to test a PR deployment’ guide",
-            "End-of-week review: keep or drop preview envs"
+            {
+              "text": "Create per-PR namespace deployments (optional)",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            },
+            {
+              "text": "Auto-destroy on PR close",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            },
+            {
+              "text": "Document costs + when to use previews",
+              "instructions": [
+                "Write it as if future-you is sleep-deprived and debugging.",
+                "Add copy-pastable commands."
+              ],
+              "recommendations": [
+                "Include “expected output” for key commands when possible."
+              ]
+            },
+            {
+              "text": "Add a ‘how to test a PR deployment’ guide",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            },
+            {
+              "text": "End-of-week review: keep or drop preview envs",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            }
           ]
         }
       ]
@@ -221,55 +974,295 @@
           "title": "Day 16 — Metrics stack",
           "focus": "Prometheus + Grafana",
           "tasks": [
-            "Install kube-prometheus-stack",
-            "Expose Grafana safely (port-forward is OK)",
-            "Create a dashboard: pod restarts, CPU/mem, node pressure",
-            "Write runbooks/observability.md",
-            "Commit: metrics online"
+            {
+              "text": "Install kube-prometheus-stack",
+              "instructions": [
+                "Create at least one dashboard that answers: “is the service healthy?”",
+                "Add 1–2 alerts and test they fire."
+              ],
+              "recommendations": [
+                "Prefer actionable alerts; avoid noisy ones."
+              ]
+            },
+            {
+              "text": "Expose Grafana safely (port-forward is OK)",
+              "instructions": [
+                "Create at least one dashboard that answers: “is the service healthy?”",
+                "Add 1–2 alerts and test they fire."
+              ],
+              "recommendations": [
+                "Prefer actionable alerts; avoid noisy ones."
+              ]
+            },
+            {
+              "text": "Create a dashboard: pod restarts, CPU/mem, node pressure",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            },
+            {
+              "text": "Write runbooks/observability.md",
+              "instructions": [
+                "Create at least one dashboard that answers: “is the service healthy?”",
+                "Add 1–2 alerts and test they fire.",
+                "Write it as if future-you is sleep-deprived and debugging.",
+                "Add copy-pastable commands."
+              ],
+              "recommendations": [
+                "Prefer actionable alerts; avoid noisy ones.",
+                "Include “expected output” for key commands when possible."
+              ]
+            },
+            {
+              "text": "Commit: metrics online",
+              "instructions": [
+                "Create at least one dashboard that answers: “is the service healthy?”",
+                "Add 1–2 alerts and test they fire."
+              ],
+              "recommendations": [
+                "Prefer actionable alerts; avoid noisy ones."
+              ]
+            }
           ]
         },
         {
           "title": "Day 17 — App metrics (basic)",
           "focus": "Service visibility",
           "tasks": [
-            "Add basic request metrics to app (optional)",
-            "Dashboards: latency/error rate (even simple)",
-            "Document SLO-ish thinking (what matters)",
-            "Add alert rules for obvious failures",
-            "End-to-day: test alerts (simulate crashloop)"
+            {
+              "text": "Add basic request metrics to app (optional)",
+              "instructions": [
+                "Create at least one dashboard that answers: “is the service healthy?”",
+                "Add 1–2 alerts and test they fire."
+              ],
+              "recommendations": [
+                "Prefer actionable alerts; avoid noisy ones."
+              ]
+            },
+            {
+              "text": "Dashboards: latency/error rate (even simple)",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            },
+            {
+              "text": "Document SLO-ish thinking (what matters)",
+              "instructions": [
+                "Write it as if future-you is sleep-deprived and debugging.",
+                "Add copy-pastable commands."
+              ],
+              "recommendations": [
+                "Include “expected output” for key commands when possible."
+              ]
+            },
+            {
+              "text": "Add alert rules for obvious failures",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            },
+            {
+              "text": "End-to-day: test alerts (simulate crashloop)",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            }
           ]
         },
         {
           "title": "Day 18 — Logs",
           "focus": "Debugging",
           "tasks": [
-            "Choose logging path (CloudWatch is fine)",
-            "Ensure logs are accessible + searchable",
-            "Write ‘how to debug a 500’ runbook",
-            "Add structured logging (optional)",
-            "Commit: log pipeline documented"
+            {
+              "text": "Choose logging path (CloudWatch is fine)",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            },
+            {
+              "text": "Ensure logs are accessible + searchable",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            },
+            {
+              "text": "Write ‘how to debug a 500’ runbook",
+              "instructions": [
+                "Write it as if future-you is sleep-deprived and debugging.",
+                "Add copy-pastable commands."
+              ],
+              "recommendations": [
+                "Include “expected output” for key commands when possible."
+              ]
+            },
+            {
+              "text": "Add structured logging (optional)",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            },
+            {
+              "text": "Commit: log pipeline documented",
+              "instructions": [
+                "Write it as if future-you is sleep-deprived and debugging.",
+                "Add copy-pastable commands."
+              ],
+              "recommendations": [
+                "Include “expected output” for key commands when possible."
+              ]
+            }
           ]
         },
         {
           "title": "Day 19 — Alert playbooks",
           "focus": "Operational readiness",
           "tasks": [
-            "Write runbooks/alerts.md for each alert",
-            "Add ‘first 5 minutes’ checklist",
-            "Add ‘rollback now’ decision criteria",
-            "Test: break one thing and follow your playbook",
-            "Refine docs based on what was missing"
+            {
+              "text": "Write runbooks/alerts.md for each alert",
+              "instructions": [
+                "Write it as if future-you is sleep-deprived and debugging.",
+                "Add copy-pastable commands."
+              ],
+              "recommendations": [
+                "Include “expected output” for key commands when possible."
+              ]
+            },
+            {
+              "text": "Add ‘first 5 minutes’ checklist",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            },
+            {
+              "text": "Add ‘rollback now’ decision criteria",
+              "instructions": [
+                "Run the workflow on a PR and confirm it blocks bad changes.",
+                "Keep secrets out of the repo; prefer OIDC."
+              ],
+              "recommendations": [
+                "Fail fast: lint/test/build before deploy steps."
+              ]
+            },
+            {
+              "text": "Test: break one thing and follow your playbook",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            },
+            {
+              "text": "Refine docs based on what was missing",
+              "instructions": [
+                "Write it as if future-you is sleep-deprived and debugging.",
+                "Add copy-pastable commands."
+              ],
+              "recommendations": [
+                "Include “expected output” for key commands when possible."
+              ]
+            }
           ]
         },
         {
           "title": "Day 20 — Harden and document",
           "focus": "Polish",
           "tasks": [
-            "Review permissions (least privilege)",
-            "Review resource limits and autoscaling defaults",
-            "Consolidate docs into a clean table of contents",
-            "Add screenshots (dashboards) to docs",
-            "End-of-week review: where are you still shaky?"
+            {
+              "text": "Review permissions (least privilege)",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            },
+            {
+              "text": "Review resource limits and autoscaling defaults",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            },
+            {
+              "text": "Consolidate docs into a clean table of contents",
+              "instructions": [
+                "Write it as if future-you is sleep-deprived and debugging.",
+                "Add copy-pastable commands."
+              ],
+              "recommendations": [
+                "Include “expected output” for key commands when possible."
+              ]
+            },
+            {
+              "text": "Add screenshots (dashboards) to docs",
+              "instructions": [
+                "Write it as if future-you is sleep-deprived and debugging.",
+                "Add copy-pastable commands."
+              ],
+              "recommendations": [
+                "Include “expected output” for key commands when possible."
+              ]
+            },
+            {
+              "text": "End-of-week review: where are you still shaky?",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            }
           ]
         }
       ]
@@ -282,55 +1275,301 @@
           "title": "Day 21 — Reliability basics",
           "focus": "Safe operations",
           "tasks": [
-            "Add HPA (CPU-based) and validate behavior",
-            "Add PodDisruptionBudget",
-            "Tune rollout strategy for safe deploys",
-            "Document: scaling and what triggers it",
-            "Commit: reliability controls in place"
+            {
+              "text": "Add HPA (CPU-based) and validate behavior",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            },
+            {
+              "text": "Add PodDisruptionBudget",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            },
+            {
+              "text": "Tune rollout strategy for safe deploys",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            },
+            {
+              "text": "Document: scaling and what triggers it",
+              "instructions": [
+                "Write it as if future-you is sleep-deprived and debugging.",
+                "Add copy-pastable commands."
+              ],
+              "recommendations": [
+                "Include “expected output” for key commands when possible."
+              ]
+            },
+            {
+              "text": "Commit: reliability controls in place",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            }
           ]
         },
         {
           "title": "Day 22 — Chaos drill #1 (pods)",
           "focus": "Failure handling",
           "tasks": [
-            "Kill pods / delete deployment and observe recovery",
-            "Check dashboards + logs during failure",
-            "Write postmortem: what happened, detection, fix",
-            "Add a prevention action (if any)",
-            "Commit postmortem and improvements"
+            {
+              "text": "Kill pods / delete deployment and observe recovery",
+              "instructions": [
+                "Create at least one dashboard that answers: “is the service healthy?”",
+                "Add 1–2 alerts and test they fire."
+              ],
+              "recommendations": [
+                "Prefer actionable alerts; avoid noisy ones."
+              ]
+            },
+            {
+              "text": "Check dashboards + logs during failure",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            },
+            {
+              "text": "Write postmortem: what happened, detection, fix",
+              "instructions": [
+                "Write: impact → timeline → root cause → fix → follow-ups.",
+                "Add at least one prevention action and implement it.",
+                "Write it as if future-you is sleep-deprived and debugging.",
+                "Add copy-pastable commands."
+              ],
+              "recommendations": [
+                "Keep postmortems blameless; focus on system improvements.",
+                "Include “expected output” for key commands when possible."
+              ]
+            },
+            {
+              "text": "Add a prevention action (if any)",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            },
+            {
+              "text": "Commit postmortem and improvements",
+              "instructions": [
+                "Write: impact → timeline → root cause → fix → follow-ups.",
+                "Add at least one prevention action and implement it."
+              ],
+              "recommendations": [
+                "Keep postmortems blameless; focus on system improvements."
+              ]
+            }
           ]
         },
         {
           "title": "Day 23 — Chaos drill #2 (bad config)",
           "focus": "Release safety",
           "tasks": [
-            "Deploy a bad config and see impact",
-            "Rollback using your documented procedure",
-            "Write postmortem (incident-002)",
-            "Add guardrails in CI (if possible)",
-            "Commit"
+            {
+              "text": "Deploy a bad config and see impact",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            },
+            {
+              "text": "Rollback using your documented procedure",
+              "instructions": [
+                "Write it as if future-you is sleep-deprived and debugging.",
+                "Add copy-pastable commands."
+              ],
+              "recommendations": [
+                "Include “expected output” for key commands when possible."
+              ]
+            },
+            {
+              "text": "Write postmortem (incident-002)",
+              "instructions": [
+                "Run the workflow on a PR and confirm it blocks bad changes.",
+                "Keep secrets out of the repo; prefer OIDC.",
+                "Write: impact → timeline → root cause → fix → follow-ups.",
+                "Add at least one prevention action and implement it.",
+                "Write it as if future-you is sleep-deprived and debugging."
+              ],
+              "recommendations": [
+                "Fail fast: lint/test/build before deploy steps.",
+                "Keep postmortems blameless; focus on system improvements.",
+                "Include “expected output” for key commands when possible."
+              ]
+            },
+            {
+              "text": "Add guardrails in CI (if possible)",
+              "instructions": [
+                "Run the workflow on a PR and confirm it blocks bad changes.",
+                "Keep secrets out of the repo; prefer OIDC."
+              ],
+              "recommendations": [
+                "Fail fast: lint/test/build before deploy steps."
+              ]
+            },
+            {
+              "text": "Commit",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            }
           ]
         },
         {
           "title": "Day 24 — Troubleshooting guide",
           "focus": "Supportability",
           "tasks": [
-            "Write a troubleshooting section in README",
-            "Include: CrashLoopBackOff, ImagePullBackOff, 502/503",
-            "Add quick kubectl commands cheat sheet",
-            "Ensure docs are beginner-friendly (future-you)",
-            "Commit"
+            {
+              "text": "Write a troubleshooting section in README",
+              "instructions": [
+                "Write it as if future-you is sleep-deprived and debugging.",
+                "Add copy-pastable commands."
+              ],
+              "recommendations": [
+                "Include “expected output” for key commands when possible."
+              ]
+            },
+            {
+              "text": "Include: CrashLoopBackOff, ImagePullBackOff, 502/503",
+              "instructions": [
+                "Build locally once, then automate in CI.",
+                "Tag images with commit SHA and keep latest optional."
+              ],
+              "recommendations": [
+                "Keep images small (multi-stage builds) when possible."
+              ]
+            },
+            {
+              "text": "Add quick kubectl commands cheat sheet",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            },
+            {
+              "text": "Ensure docs are beginner-friendly (future-you)",
+              "instructions": [
+                "Write it as if future-you is sleep-deprived and debugging.",
+                "Add copy-pastable commands."
+              ],
+              "recommendations": [
+                "Include “expected output” for key commands when possible."
+              ]
+            },
+            {
+              "text": "Commit",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            }
           ]
         },
         {
           "title": "Day 25 — End-to-end demo run",
           "focus": "Proof",
           "tasks": [
-            "Do a clean deploy from scratch (infra → app)",
-            "Record a 2–3 minute demo (screen capture)",
-            "Validate: CI deploys, dashboards, rollback",
-            "Write ‘demo script’ notes",
-            "End-of-week review: list remaining gaps"
+            {
+              "text": "Do a clean deploy from scratch (infra → app)",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            },
+            {
+              "text": "Record a 2–3 minute demo (screen capture)",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            },
+            {
+              "text": "Validate: CI deploys, dashboards, rollback",
+              "instructions": [
+                "Run the workflow on a PR and confirm it blocks bad changes.",
+                "Keep secrets out of the repo; prefer OIDC."
+              ],
+              "recommendations": [
+                "Fail fast: lint/test/build before deploy steps."
+              ]
+            },
+            {
+              "text": "Write ‘demo script’ notes",
+              "instructions": [
+                "Write it as if future-you is sleep-deprived and debugging.",
+                "Add copy-pastable commands."
+              ],
+              "recommendations": [
+                "Include “expected output” for key commands when possible."
+              ]
+            },
+            {
+              "text": "End-of-week review: list remaining gaps",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            }
           ]
         }
       ]
@@ -343,67 +1582,334 @@
           "title": "Day 26 — CV bullets (evidence-based)",
           "focus": "Positioning",
           "tasks": [
-            "Write CV bullets mapping to your project evidence",
-            "Add keyword coverage (EKS, Terraform, OIDC, Helm)",
-            "Create a 1-page summary in docs/for-hiring.md",
-            "Sanity-check: no fluff, only proof",
-            "Commit"
+            {
+              "text": "Write CV bullets mapping to your project evidence",
+              "instructions": [
+                "Write it as if future-you is sleep-deprived and debugging.",
+                "Add copy-pastable commands."
+              ],
+              "recommendations": [
+                "Include “expected output” for key commands when possible."
+              ]
+            },
+            {
+              "text": "Add keyword coverage (EKS, Terraform, OIDC, Helm)",
+              "instructions": [
+                "Create/adjust Terraform code for this change.",
+                "Run: terraform fmt && terraform validate.",
+                "Run: terraform plan and read the diff before applying.",
+                "After changes, verify: kubectl get nodes,pods -A",
+                "Confirm addons are healthy (metrics-server, CSI drivers)."
+              ],
+              "recommendations": [
+                "Prefer small, reviewable commits.",
+                "Keep state remote and locked (S3 + DynamoDB).",
+                "Write a quick runbook: how to regain access if kubeconfig breaks.",
+                "Keep templates simple; avoid clever logic."
+              ]
+            },
+            {
+              "text": "Create a 1-page summary in docs/for-hiring.md",
+              "instructions": [
+                "Write it as if future-you is sleep-deprived and debugging.",
+                "Add copy-pastable commands."
+              ],
+              "recommendations": [
+                "Include “expected output” for key commands when possible."
+              ]
+            },
+            {
+              "text": "Sanity-check: no fluff, only proof",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            },
+            {
+              "text": "Commit",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            }
           ]
         },
         {
           "title": "Day 27 — LinkedIn + repo polish",
           "focus": "Discoverability",
           "tasks": [
-            "Update LinkedIn headline + about section",
-            "Pin/feature the repo and demo video",
-            "Clean README with sections + screenshots",
-            "Add badges for CI",
-            "Commit"
+            {
+              "text": "Update LinkedIn headline + about section",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            },
+            {
+              "text": "Pin/feature the repo and demo video",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            },
+            {
+              "text": "Clean README with sections + screenshots",
+              "instructions": [
+                "Write it as if future-you is sleep-deprived and debugging.",
+                "Add copy-pastable commands."
+              ],
+              "recommendations": [
+                "Include “expected output” for key commands when possible."
+              ]
+            },
+            {
+              "text": "Add badges for CI",
+              "instructions": [
+                "Run the workflow on a PR and confirm it blocks bad changes.",
+                "Keep secrets out of the repo; prefer OIDC."
+              ],
+              "recommendations": [
+                "Fail fast: lint/test/build before deploy steps."
+              ]
+            },
+            {
+              "text": "Commit",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            }
           ]
         },
         {
           "title": "Day 28 — Interview drills: Kubernetes",
           "focus": "Combat practice",
           "tasks": [
-            "Practice explaining Deployments/Services/Ingress",
-            "Debug drill: CrashLoopBackOff scenario",
-            "Explain resources/probes/HPA",
-            "Write flashcards / battle card",
-            "1 mock interview (self-record)"
+            {
+              "text": "Practice explaining Deployments/Services/Ingress",
+              "instructions": [
+                "Verify the ALB target group health checks match your readiness endpoint.",
+                "Debug with: kubectl describe ingress + controller logs."
+              ],
+              "recommendations": [
+                "Write down the 3 most common 502/503 causes and how to detect each."
+              ]
+            },
+            {
+              "text": "Debug drill: CrashLoopBackOff scenario",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            },
+            {
+              "text": "Explain resources/probes/HPA",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            },
+            {
+              "text": "Write flashcards / battle card",
+              "instructions": [
+                "Write it as if future-you is sleep-deprived and debugging.",
+                "Add copy-pastable commands."
+              ],
+              "recommendations": [
+                "Include “expected output” for key commands when possible."
+              ]
+            },
+            {
+              "text": "1 mock interview (self-record)",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            }
           ]
         },
         {
           "title": "Day 29 — Interview drills: AWS + Terraform",
           "focus": "Combat practice",
           "tasks": [
-            "Explain VPC/subnets/NAT/Security Groups",
-            "Explain IAM least privilege + OIDC",
-            "Explain Terraform state/drift/modules",
-            "Debug drill: networking reachability",
-            "Update battle card"
+            {
+              "text": "Explain VPC/subnets/NAT/Security Groups",
+              "instructions": [
+                "Draw the network flow: client → ALB → nodes → pods.",
+                "Verify routes and security groups allow the traffic you expect."
+              ],
+              "recommendations": [
+                "Document tradeoffs (1 NAT vs 2 NATs)."
+              ]
+            },
+            {
+              "text": "Explain IAM least privilege + OIDC",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            },
+            {
+              "text": "Explain Terraform state/drift/modules",
+              "instructions": [
+                "Create/adjust Terraform code for this change.",
+                "Run: terraform fmt && terraform validate.",
+                "Run: terraform plan and read the diff before applying."
+              ],
+              "recommendations": [
+                "Prefer small, reviewable commits.",
+                "Keep state remote and locked (S3 + DynamoDB)."
+              ]
+            },
+            {
+              "text": "Debug drill: networking reachability",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            },
+            {
+              "text": "Update battle card",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            }
           ]
         },
         {
           "title": "Day 30 — Apply loop",
           "focus": "Execution",
           "tasks": [
-            "Create a target company list (20–30)",
-            "Apply to 5 roles/day for 1 week",
-            "Track applications and outcomes",
-            "Refine CV based on rejections",
-            "Schedule 2 mock interviews with a friend or online"
+            {
+              "text": "Create a target company list (20–30)",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            },
+            {
+              "text": "Apply to 5 roles/day for 1 week",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            },
+            {
+              "text": "Track applications and outcomes",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            },
+            {
+              "text": "Refine CV based on rejections",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            },
+            {
+              "text": "Schedule 2 mock interviews with a friend or online",
+              "instructions": [
+                "Do the task end-to-end.",
+                "Verify it works (quick check).",
+                "Write 2–3 lines of notes: what you learned + pitfalls."
+              ],
+              "recommendations": [
+                "Keep scope small and ship daily."
+              ]
+            }
           ]
         }
       ]
     }
   ],
   "skillTree": [
-    { "name": "Linux + networking basics", "why": "You must debug reality." },
-    { "name": "Docker", "why": "Packaging and reproducibility." },
-    { "name": "Terraform (AWS)", "why": "Infra as code + credibility." },
-    { "name": "Kubernetes (EKS)", "why": "Modern platform baseline." },
-    { "name": "CI/CD (GitHub Actions)", "why": "Shipping safely is the job." },
-    { "name": "Observability", "why": "If you can’t see it, you can’t run it." }
+    {
+      "name": "Linux + networking basics",
+      "why": "You must debug reality."
+    },
+    {
+      "name": "Docker",
+      "why": "Packaging and reproducibility."
+    },
+    {
+      "name": "Terraform (AWS)",
+      "why": "Infra as code + credibility."
+    },
+    {
+      "name": "Kubernetes (EKS)",
+      "why": "Modern platform baseline."
+    },
+    {
+      "name": "CI/CD (GitHub Actions)",
+      "why": "Shipping safely is the job."
+    },
+    {
+      "name": "Observability",
+      "why": "If you can’t see it, you can’t run it."
+    }
   ],
   "interviews": {
     "Kubernetes": [
