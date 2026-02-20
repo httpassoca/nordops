@@ -68,6 +68,68 @@ function weekProgress(wi) {
   return { total, done, pct: total ? Math.round((done / total) * 100) : 0 };
 }
 
+function renderTree() {
+  const root = $('#treeRoot');
+  root.innerHTML = '';
+
+  const top = el('ul', { class: 'tree', role: 'tree' });
+
+  data.weeks.forEach((w, wi) => {
+    const wp = weekProgress(wi);
+
+    const weekLi = el('li', { role: 'treeitem' });
+    weekLi.appendChild(
+      el('div', { class: 'node' }, [
+        el('div', {}, [
+          el('div', { class: 'name' }, [w.title]),
+          el('div', { class: 'small' }, [w.goal])
+        ]),
+        el('span', { class: 'pill', title: `${wp.pct}% complete` }, [`${wp.done}/${wp.total} · ${wp.pct}%`])
+      ])
+    );
+
+    const daysUl = el('ul', { role: 'group' });
+    (w.days || []).forEach((d, di) => {
+      const tasks = Array.isArray(d.tasks) ? d.tasks : [];
+      const done = tasks.reduce((acc, _t, ti) => acc + (progress[taskId(wi, di, ti)] ? 1 : 0), 0);
+      const pct = tasks.length ? Math.round((done / tasks.length) * 100) : 0;
+
+      const dayLi = el('li', { role: 'treeitem' });
+      dayLi.appendChild(
+        el('div', { class: 'node' }, [
+          el('div', {}, [
+            el('div', { class: 'name' }, [d.title]),
+            el('div', { class: 'small' }, [d.focus ? `Focus: ${d.focus}` : ''])
+          ]),
+          el('span', { class: 'pill', title: `${pct}% complete` }, [`${done}/${tasks.length}`])
+        ])
+      );
+
+      const taskUl = el('ul', { role: 'group' });
+      tasks.forEach((t, ti) => {
+        const id = taskId(wi, di, ti);
+        const checked = !!progress[id];
+        taskUl.appendChild(
+          el('li', { role: 'treeitem' }, [
+            el('div', { class: 'node' }, [
+              el('div', { class: 'small' }, [checked ? `✓ ${t}` : t]),
+              el('span', { class: 'pill' }, [checked ? 'done' : 'todo'])
+            ])
+          ])
+        );
+      });
+
+      dayLi.appendChild(taskUl);
+      daysUl.appendChild(dayLi);
+    });
+
+    weekLi.appendChild(daysUl);
+    top.appendChild(weekLi);
+  });
+
+  root.appendChild(top);
+}
+
 function renderWeeks() {
   const root = $('#weeksList');
   root.innerHTML = '';
@@ -108,15 +170,18 @@ function renderWeeks() {
             progress[id] = ev.target.checked;
             if (!ev.target.checked) delete progress[id];
             saveProgress(progress);
-            // re-render week headers/bars (cheap enough)
+            // re-render progress bars + tree
+            renderTree();
             renderWeeks();
           }
         });
 
-        const item = el('li', { class: `task ${checked ? 'done' : ''}` }, [
+        const label = el('label', {}, [
           input,
           el('div', { class: 't' }, [text])
         ]);
+
+        const item = el('li', { class: `task ${checked ? 'done' : ''}` }, [label]);
         ul.appendChild(item);
       });
 
@@ -185,10 +250,12 @@ $('#resetProgress')?.addEventListener('click', () => {
   if (!confirm('Reset all progress?')) return;
   progress = {};
   saveProgress(progress);
+  renderTree();
   renderWeeks();
 });
 
 renderChips();
+renderTree();
 renderWeeks();
 renderSkillTree();
 renderInterviews();

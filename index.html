@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <a class="skip" href="#main">Skip to content</a>
     <div class="bg"></div>
 
     <header class="top">
@@ -19,8 +20,9 @@
           </div>
         </div>
 
-        <nav class="nav">
+        <nav class="nav" aria-label="Site navigation">
           <a href="#overview">Overview</a>
+          <a href="#tree">Roadmap Tree</a>
           <a href="#weeks">Daily Questline</a>
           <a href="#skills">Skill Tree</a>
           <a href="#interviews">Trials (Interviews)</a>
@@ -29,7 +31,7 @@
       </div>
     </header>
 
-    <main class="wrap">
+    <main id="main" class="wrap" tabindex="-1">
       <section id="overview" class="card">
         <div class="card-head">
           <h2>Overview</h2>
@@ -52,6 +54,17 @@
             <p class="muted">These are the terms that get you matched, screened, and invited.</p>
           </div>
         </div>
+      </section>
+
+      <section id="tree" class="card">
+        <div class="card-head">
+          <h2>Roadmap Tree (everything you will have done)</h2>
+          <span class="badge alt">Auto-updates as you tick tasks</span>
+        </div>
+        <div class="muted" style="margin:-0.25rem 0 0.75rem">
+          This is the full map. The Daily Questline below is the step-by-step execution plan.
+        </div>
+        <div id="treeRoot"></div>
       </section>
 
       <section id="weeks" class="card">
