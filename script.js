@@ -290,9 +290,50 @@ $('#resetProgress')?.addEventListener('click', () => {
   renderWeeks();
 });
 
+function slugify(s) {
+  return String(s || '')
+    .trim()
+    .toLowerCase()
+    .replace(/['’]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+}
+
+function addAnchoredHeadings() {
+  const headings = document.querySelectorAll('main h2, main h3');
+  const used = new Set(Array.from(document.querySelectorAll('[id]')).map((n) => n.id));
+
+  headings.forEach((h) => {
+    if (h.querySelector('a.anchor')) return;
+
+    const text = h.textContent || '';
+    let id = h.id || slugify(text);
+    if (!id) return;
+
+    // ensure unique
+    let base = id;
+    let i = 2;
+    while (used.has(id)) {
+      if (h.id === id) break;
+      id = `${base}-${i++}`;
+    }
+
+    h.id = id;
+    used.add(id);
+
+    const a = document.createElement('a');
+    a.className = 'anchor';
+    a.href = `#${id}`;
+    a.setAttribute('aria-label', `Link to: ${text.trim()}`);
+    a.textContent = '#';
+    h.appendChild(a);
+  });
+}
+
 renderChips();
 renderTree();
 renderWeeks();
 renderSkillTree();
 renderInterviews();
 renderChecklists();
+addAnchoredHeadings();

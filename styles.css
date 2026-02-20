@@ -92,6 +92,28 @@ h1,h2,h3{
   margin:0;
 }
 
+h2, h3{ position: relative; scroll-margin-top: 6.5rem; }
+
+.anchor{
+  color: color-mix(in oklab, var(--muted) 80%, var(--gold));
+  text-decoration: none;
+  margin-left: .5rem;
+  font-weight: 800;
+  opacity: 0;
+}
+
+h2:hover .anchor,
+h3:hover .anchor,
+h2:focus-within .anchor,
+h3:focus-within .anchor{
+  opacity: 1;
+}
+
+.anchor:focus-visible{
+  opacity: 1;
+  border-radius: .5rem;
+}
+
 h1{font-size:clamp(1.3rem, 2.2vw, 1.9rem); letter-spacing:.06em;}
 .tagline{margin:.25rem 0 0; color:var(--muted)}
 
